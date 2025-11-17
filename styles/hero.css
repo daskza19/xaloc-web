@@ -72,3 +72,35 @@ body {
   overflow: hidden;
   position: absolute;
 }
+
+.first-text-effect{
+  position: absolute;
+  top: -20vh;
+  right: -25vh;
+  z-index: 50;
+  height: 45vh;
+  rotate: -10deg;
+}
+
+.second-text-effect{
+  position: absolute;
+  top: -20vh;
+  right: -20vh;
+  z-index: 50;
+  height: 50vh;
+}
+
+.third-text-effect{
+  position: absolute;
+  top: -5vh;
+  right: -25vh;
+  z-index: 50;
+  height: 35vh;
+  rotate: 15deg;
+}
+
+#text-path1, #text-path2, #text-path3 {
+  fill: rgb(203, 178, 121);
+  font-weight: bold;
+  font-size: 2rem;
+}
