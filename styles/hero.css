@@ -74,33 +74,64 @@ body {
 }
 
 .first-text-effect{
-  position: absolute;
-  top: -20vh;
-  right: -25vh;
-  z-index: 50;
-  height: 45vh;
-  rotate: -10deg;
+    position: absolute;
+    top: -20vh;
+    right: -30vh;
+    height: 55vh;
+    rotate: -10deg;
+    width: auto;
+    z-index: 0;
+  }
+
+  .second-text-effect{
+    position: absolute;
+    top: -20vh;
+    right: -20vh;
+    height: 60vh;
+    width: auto;
+    z-index: 0;
+  }
+
+  .third-text-effect{
+    position: absolute;
+    top: -5vh;
+    right: -25vh;
+    height: 45vh;
+    rotate: 15deg;
+    z-index: -1;
+    width: auto;
+  }
+
+  .fourth-text-effect{
+    position: absolute;
+    top: 60vh;
+    left: -20vh;
+    z-index: -1;
+    height: 90vh;
+  }
+
+  .fifth-text-effect{
+    position: absolute;
+    top: 70vh;
+    left: -20vh;
+    z-index: -1;
+    height: 78vh;
+  }
+
+#text-path1, #text-path2, #text-path3{
+  fill: rgb(109, 95, 65);
+  font-weight: bold;
+  font-size: 4vh;
 }
 
-.second-text-effect{
-  position: absolute;
-  top: -20vh;
-  right: -20vh;
-  z-index: 50;
-  height: 50vh;
-}
-
-.third-text-effect{
-  position: absolute;
-  top: -5vh;
-  right: -25vh;
-  z-index: 50;
-  height: 35vh;
-  rotate: 15deg;
-}
-
-#text-path1, #text-path2, #text-path3 {
+#text-path4, #text-path5 {
   fill: rgb(203, 178, 121);
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 4vh;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  #text-path1, #text-path2, #text-path3, #text-path4, #text-path5 {
+    font-size: 4vw;
+  }
 }
