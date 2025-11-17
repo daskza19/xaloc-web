@@ -1,0 +1,63 @@
+.solutions{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.typing-general {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.typing-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+p{
+    font-family: 'Arial Black', sans-serif;
+    color: white;
+    margin: 0;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+p.typing {
+    overflow: hidden;
+    border-right: 1px solid white;
+    animation: typing 3s steps(30, end) forwards, blink 1s step-end infinite;
+}
+
+p.typing::after {
+    content: '';
+}
+
+@keyframes typing {
+    0% { 
+        max-width: 0; 
+    }
+    100% { 
+        max-width: 100%; 
+    }
+}
+
+@keyframes erasing {
+    0% { 
+        max-width: 100%; 
+    }
+    100% { 
+        max-width: 0; 
+    }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}

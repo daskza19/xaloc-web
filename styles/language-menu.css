@@ -1,0 +1,138 @@
+#menu-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 1000;
+    border: none;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+#menu-button:hover {
+    transform: scale(1.1);
+}
+
+#main-menu {
+    position: fixed;
+    top: 0;
+    left: -50vw;
+    width: 50vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem 0;
+    transition: left 0.3s ease;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#main-menu.open {
+    left: 0;
+}
+
+.menu-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.language-section {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(203, 178, 121, 0.3);
+}
+
+.language-icon {
+    background-color: transparent;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.language-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.language-icon:hover {
+    transform: scale(1.2);
+    border-color: rgb(203, 178, 121);
+}
+
+.language-icon.active {
+    border-color: rgb(203, 178, 121);
+    background-color: rgba(203, 178, 121, 0.2);
+}
+
+.nav-section {
+    flex: 1;
+    height: auto;
+    padding-top: 10vh;
+}
+
+.nav-link {
+    color: rgb(203, 178, 121);
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Arial Black', sans-serif;
+    padding: 1rem 2rem;
+    transition: all 0.3s ease;
+    width: 30vw;
+    text-align: center;
+    border-left: 3px solid transparent;
+    padding: 1vh 0 1vh;
+    margin: 0;
+}
+
+.nav-link:hover {
+    color: white;
+    border-left-color: rgb(203, 178, 121);
+    background-color: rgba(203, 178, 121, 0.1);
+    transform: translateX(10px);
+}
+
+@media (max-width: 768px) {
+    #language-button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        top: 1rem;
+        left: 1rem;
+    }
+    
+    #language-menu {
+        width: 250px;
+        left: -250px;
+    }
+    
+    .language-option {
+        width: 150px;
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}

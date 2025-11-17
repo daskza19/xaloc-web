@@ -4,8 +4,34 @@
   <meta charset="UTF-8">
   <title>Xaloc Landing Page</title>
   <link rel="stylesheet" href="styles/hero.css">
+  <link rel="stylesheet" href="styles/solutions.css">
+  <link rel="stylesheet" href="styles/language-menu.css">
 </head>
 <body>
+  <!-- Botón de menú -->
+  <button id="menu-button" onclick="toggleMenu()">☰</button>
+  
+  <!-- Menú de navegación -->
+  <nav id="main-menu">
+    <div class="menu-section language-section">
+      <button class="language-icon active" onclick="changeLanguage('ca', event)" title="Català">
+        <img src="images/nav/cat_flag.webp" alt="Català">
+      </button>
+      <button class="language-icon" onclick="changeLanguage('es', event)" title="Español">
+        <img src="images/nav/esp_flag.webp" alt="Español">
+      </button>
+      <button class="language-icon" onclick="changeLanguage('en', event)" title="English">
+        <img src="images/nav/eng_flag.webp" alt="English">
+      </button>
+    </div>
+    <div class="menu-section nav-section">
+      <a href="#home" class="nav-link" data-i18n="nav-home">Inici</a>
+      <a href="#about" class="nav-link" data-i18n="nav-about">Sobre nosaltres</a>
+      <a href="#services" class="nav-link" data-i18n="nav-services">Serveis</a>
+      <a href="#contact" class="nav-link" data-i18n="nav-contact">Contacte</a>
+    </div>
+  </nav>
+
   <div class="overlay"></div>
   <div class="container">
     <div class="effects">
@@ -57,7 +83,18 @@
         </text>
       </svg>
     </div>
+    <div class="solutions">
+      <div class="typing-general">
+        <p data-i18n="hero-subtitle">Som especialistes</p>
+        <div class="typing-line">
+          <p data-i18n="hero-typing-prefix">amb</p>
+          <p class="typing">festes</p>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
+<script src="scripts/language.js"></script>
 <script src="scripts/hero-text.js"></script>
+<script src="scripts/typing-effect.js"></script>
 </html>
