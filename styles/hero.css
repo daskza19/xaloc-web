@@ -2,11 +2,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
-  min-height: 100vh;
-  background: url('images/background.jpg') no-repeat center center fixed;
-  background-size: cover;
   position: relative;
-  color: #fff;
+  background-color: #000000;
 }
 .overlay {
   position: absolute;
@@ -41,25 +38,37 @@ body {
   width: calc(100% + 1rem);
   height: calc(100% + 1rem);
   object-fit: cover;
-  filter: blur(0.25rem) brightness(2);
+  filter: blur(0.25rem) brightness(0.5);
 }
 
-h1 {
-  font-size: 3em;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 8px #000;
-}
-p {
-  font-size: 1.5em;
-  margin-bottom: 40px;
-  text-shadow: 1px 1px 6px #000;
-}
-
-.main-image {
+.xaloc-logo {
   width: 34%;
   min-width: 34vh;
   max-width: 24vw;
-  border-radius: 20px;
-  margin-bottom: 20px;
   margin-bottom: 20vh;
+}
+
+.first-effect {
+  position: absolute;
+  top: -1.5rem;
+  right: -1.5rem;
+  opacity: 0.6;
+  filter: blur(1.5rem);
+  z-index: 55;
+}
+
+.second-effect {
+  position: absolute;
+  top: 50vh;
+  left: -1.5rem;
+  opacity: 0.6;
+  filter: blur(1.5rem);
+  z-index: 55;
+}
+
+.effects {
+  width: 100%;
+  height: 200vh;
+  overflow: hidden;
+  position: absolute;
 }
