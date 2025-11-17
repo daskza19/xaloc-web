@@ -41,7 +41,7 @@ body {
   width: calc(100% + 1rem);
   height: calc(100% + 1rem);
   object-fit: cover;
-  filter: blur(0.25rem) brightness(0.25);
+  filter: blur(0.25rem) brightness(2);
 }
 
 h1 {
