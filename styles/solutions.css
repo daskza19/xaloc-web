@@ -1,3 +1,7 @@
+:root {
+    --primary-color: rgb(203, 178, 121);
+}
+
 .solutions{
     height: 100vh;
     width: 100%;
@@ -26,13 +30,14 @@ p{
     font-family: 'Arial Black', sans-serif;
     color: white;
     margin: 0;
-    width: fit-content;
-    white-space: nowrap;
+    font-size: 4rem;
 }
 
 p.typing {
+    color: var(--primary-color);
     overflow: hidden;
-    border-right: 1px solid white;
+    white-space: nowrap;
+    border-right: 2px solid var(--primary-color);
     animation: typing 3s steps(30, end) forwards, blink 1s step-end infinite;
 }
 
@@ -60,4 +65,16 @@ p.typing::after {
 
 @keyframes blink {
     50% { border-color: transparent; }
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .typing-line {
+        flex-direction: column;
+    }
+    p {
+        font-size: 5vh;
+    }
+    .typing-general{
+        width: 90vw;
+    }
 }

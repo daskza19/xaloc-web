@@ -6,9 +6,9 @@ let translations = {
     "nav-services": "Serveis",
     "nav-contact": "Contacte",
     "hero-title": "Benvinguts a Xaloc Events",
-    "hero-subtitle": "Som especialistes",
-    "hero-typing-prefix": "amb",
-    "hero-typing-words": ["festes", "events", "concerts", "celebracions", "experiències"]
+    "hero-subtitle": "Tú decideixes el pla,",
+    "hero-typing-prefix": "nosaltres posem",
+    "hero-typing-words": ["el ritme", "l'ambient", "la beguda", "l'oferta", "l'experiència"]
   },
   "es": {
     "nav-home": "Inicio",
@@ -16,9 +16,9 @@ let translations = {
     "nav-services": "Servicios",
     "nav-contact": "Contacto",
     "hero-title": "Bienvenidos a Xaloc Events",
-    "hero-subtitle": "Somos especialistas",
-    "hero-typing-prefix": "con",
-    "hero-typing-words": ["fiestas", "eventos", "conciertos", "celebraciones", "experiencias"]
+    "hero-subtitle": "Tú decides el plan,",
+    "hero-typing-prefix": "nosotros ponemos",
+    "hero-typing-words": ["el ritmo", "el ambiente", "la bebida", "la oferta", "la experiencia"]
   },
   "en": {
     "nav-home": "Home",
@@ -26,9 +26,9 @@ let translations = {
     "nav-services": "Services",
     "nav-contact": "Contact",
     "hero-title": "Welcome to Xaloc Events",
-    "hero-subtitle": "We are specialists",
-    "hero-typing-prefix": "in",
-    "hero-typing-words": ["parties", "events", "concerts", "celebrations", "experiences"]
+    "hero-subtitle": "You decide the plan,",
+    "hero-typing-prefix": "we provide",
+    "hero-typing-words": ["the rhythm", "the atmosphere", "the drinks", "the offer", "the experience"]
   }
 };
 let typingWords = [];

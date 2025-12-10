@@ -1,0 +1,144 @@
+:root {
+    --primary-color: rgb(203, 178, 121);
+}
+
+.stats-section{
+    min-height: 400vh; /* Altura extendida para scroll en horizontal */
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 5;
+}
+
+.stat-item {
+    margin: 20px;
+}
+
+p.stat-number {
+    font-size: 4rem;
+    font-family: 'Arial Black', sans-serif;
+    color: var(--primary-color);
+    display: block;
+}
+
+p.stat-label {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 10px;
+}
+
+.number-part{
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    width: 49vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.opinions-part{
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    width: 49vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.opinion-card{
+    background-color: red;
+    width: 60vh;
+    max-width: 45vw;
+    height: 30vh;
+    display: flex;
+}
+
+.person-column{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.client-photo{
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+}
+
+.opinion-column{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.opinion-stars{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.star-icon{
+    height: auto;
+    width: calc(100% / 8 - 0.3rem);
+    margin: 0.15rem;
+}
+
+.client-name{
+    width: 95%;
+    font-size: 3vh;
+    margin-bottom: 0.5rem;
+}
+
+.client-opinion{
+    width: 95%;
+    font-size: 2vh;
+    font-weight: normal;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .stats-section {
+        min-height: auto
+    }
+    .number-part {
+        position: relative; /* Sin sticky en móvil */
+        width: 100vw;
+        height: 100vh;
+    }
+    .opinions-part {
+        position: sticky;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+    p.stat-label {
+        font-size: 3vh;
+    }
+    p.stat-number{
+        font-size: 8vh;
+    }
+    .opinion-card{
+        width: 90vw;
+        max-width: none;
+        height: 25vh;
+        display: flex;
+    }
+}

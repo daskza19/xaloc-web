@@ -1,0 +1,39 @@
+/* Las alturas y sticky se controlan desde numbers.css */
+
+.opinion-carousel-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.opinion-card {
+    position: absolute;
+    opacity: 0;
+    transform: scale(0.8) translateY(100px);
+    transition: all 0.5s ease;
+    z-index: 1;
+}
+
+.opinion-card.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    z-index: 10;
+}
+
+.opinion-card.prev,
+.opinion-card.next {
+    opacity: 0.5;
+    transform: scale(0.85) translateY(0);
+    z-index: 5;
+}
+
+.opinion-card.prev {
+    transform: scale(0.85) translateY(-50px);
+}
+
+.opinion-card.next {
+    transform: scale(0.85) translateY(50px);
+}

@@ -1,9 +1,9 @@
 let currentTypingWords = [
-    "festes",
-    "events",
-    "concerts",
-    "celebracions",
-    "experiències"
+    "el ritme",
+    "l'ambient",
+    "la beguda",
+    "l'oferta",
+    "l'experiència"
 ];
 
 let currentIndex = 0;
