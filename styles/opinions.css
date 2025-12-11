@@ -1,4 +1,6 @@
-/* Las alturas y sticky se controlan desde numbers.css */
+:root {
+    --border-inverse: 2vh;
+}
 
 .opinion-carousel-container {
     width: 100%;
@@ -11,10 +13,56 @@
 
 .opinion-card {
     position: absolute;
+    display: flex;
+    flex-direction: row;
     opacity: 0;
     transform: scale(0.8) translateY(100px);
     transition: all 0.5s ease;
     z-index: 1;
+    background-color: #513D34;
+    width: 60vh;
+    max-width: 45vw;
+    height: 30vh;
+    padding: 0.15rem;
+}
+
+.opinion-card::before,
+.opinion-card::after {
+    content: '';
+    position: absolute;
+    width: var(--border-inverse);
+    height: var(--border-inverse);
+    background-color: transparent;
+}
+
+.opinion-card::before {
+    top: 0;
+    left: 0;
+    border-radius: 0 0 var(--border-inverse) 0;
+    box-shadow: var(--border-inverse) var(--border-inverse) 0 0 #513D34;
+}
+
+.opinion-card::after {
+    top: 0;
+    right: 0;
+    border-radius: 0 0 0 var(--border-inverse);
+    box-shadow: calc(-1 * var(--border-inverse)) var(--border-inverse) 0 0 #513D34;
+}
+
+.opinion-card {
+    overflow: visible;
+}
+
+.opinion-card {
+    background: 
+        radial-gradient(circle at top left, transparent var(--border-inverse), #513D34 var(--border-inverse)),
+        radial-gradient(circle at top right, transparent var(--border-inverse), #513D34 var(--border-inverse)),
+        radial-gradient(circle at bottom left, transparent var(--border-inverse), #513D34 var(--border-inverse)),
+        radial-gradient(circle at bottom right, transparent var(--border-inverse), #513D34 var(--border-inverse));
+    background-size: 51% 51%;
+    background-position: top left, top right, bottom left, bottom right;
+    background-repeat: no-repeat;
+
 }
 
 .opinion-card.active {
@@ -36,4 +84,16 @@
 
 .opinion-card.next {
     transform: scale(0.85) translateY(50px);
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .opinion-card{
+        width: 90vw;
+        max-width: none;
+        height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+    }
 }
