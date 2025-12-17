@@ -1,6 +1,6 @@
 #menu-button {
     position: fixed;
-    top: 2rem;
+    top: -5rem;
     left: 2rem;
     z-index: 1000;
     border: none;
@@ -14,7 +14,11 @@
     justify-content: center;
     font-size: 1.8rem;
     color: white;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+}
+
+#menu-button.visible {
+    top: 2rem;
 }
 
 #menu-button:hover {
@@ -114,6 +118,179 @@
     border-left-color: rgb(203, 178, 121);
     background-color: rgba(203, 178, 121, 0.1);
     transform: translateX(10px);
+}
+
+/* Ocultar menú vertical en pantallas horizontales */
+@media (min-aspect-ratio: 13/9) {
+    #menu-button {
+        display: none;
+    }
+    
+    #main-menu {
+        display: none;
+    }
+}
+
+/* Ocultar barra horizontal en pantallas verticales */
+@media (max-aspect-ratio: 13/9) {
+    #horizontal-nav {
+        display: none;
+    }
+}
+
+/* Barra de navegación horizontal */
+#horizontal-nav {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: 80vw;
+    backdrop-filter: blur(10px);
+    z-index: 998;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    background: 
+        radial-gradient(circle at top left, transparent 2vh, rgb(203, 178, 121) 2vh),
+        radial-gradient(circle at top right, transparent 2vh, rgb(203, 178, 121) 2vh),
+        radial-gradient(circle at bottom left, transparent 2vh, rgb(203, 178, 121) 2vh),
+        radial-gradient(circle at bottom right, transparent 2vh, rgb(203, 178, 121) 2vh);
+    background-size: 51% 51%;
+    background-position: top left, top right, bottom left, bottom right;
+    background-repeat: no-repeat;
+}
+
+#horizontal-nav.sticky {
+    top: 1.5rem;
+    transform: translate(-50%, 0);
+}
+
+.horizontal-nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2.5rem;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Dropdown de idiomas */
+.horizontal-language-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.language-dropdown-toggle {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    min-width: 70px;
+}
+
+.language-dropdown-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-color: rgba(0, 0, 0, 0.5);
+}
+
+.language-dropdown-toggle img {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.dropdown-arrow {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease;
+}
+
+.language-dropdown-toggle.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.language-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background-color: rgb(203, 178, 121);
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 150px;
+    z-index: 1000;
+}
+
+.language-dropdown-menu.open {
+    display: flex;
+}
+
+.language-dropdown-item {
+    background-color: transparent;
+    border: none;
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.language-dropdown-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.language-dropdown-item img {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.language-dropdown-item span {
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.horizontal-nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.horizontal-nav-link {
+    color: rgba(0, 0, 0, 0.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    font-family: 'Arial Black', sans-serif;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.horizontal-nav-link:hover {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {

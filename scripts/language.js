@@ -1,13 +1,12 @@
 let currentLanguage = 'ca';
 let translations = {
   "ca": {
-    "nav-home": "Inici",
-    "nav-about": "Sobre nosaltres",
-    "nav-services": "Serveis",
+    "nav-tickets": "Entrades",
+    "nav-gallery": "Galeria",
     "nav-contact": "Contacte",
+    "work-in-progress": "Estem treballant en això...",
     "hero-title": "Benvinguts a Xaloc Events",
-    "hero-subtitle": "Tú decideixes el pla,",
-    "hero-typing-prefix": "nosaltres posem",
+    "hero-subtitle": "Tú decideixes el pla, nosaltres posem",
     "hero-typing-words": ["el ritme", "l'ambient", "la beguda", "l'oferta", "l'experiència"],
     "client-opinion-1": "Mai hauria pensat que el meu aniversari semblaria un mini festival… aquests cracks ho van fer possible!",
     "client-opinion-2": "L’organització va ser impecable, i els meus convidats no van parar d’elogi﻿ar la varietat de begudes i la música.",
@@ -16,13 +15,12 @@ let translations = {
     "client-opinion-5": "Em vaig oblidar de tots els embolics de l’organització; ells se’n van encarregar de tot i jo només vaig haver de gaudir. Així dona gust!"
     },
   "es": {
-    "nav-home": "Inicio",
-    "nav-about": "Sobre nosotros",
-    "nav-services": "Servicios",
+    "nav-tickets": "Entradas",
+    "nav-gallery": "Galería",
     "nav-contact": "Contacto",
+    "work-in-progress": "Estamos trabajando en ello...",
     "hero-title": "Bienvenidos a Xaloc Events",
-    "hero-subtitle": "Tú decides el plan,",
-    "hero-typing-prefix": "nosotros ponemos",
+    "hero-subtitle": "Tú decides el plan, nosotros ponemos",
     "hero-typing-words": ["el ritmo", "el ambiente", "la bebida", "la oferta", "la experiencia"],
     "client-opinion-1": "Jamás pensé que mi cumpleaños iba a parecer un mini festival… ¡estos cracks lo hicieron posible!",
     "client-opinion-2": "La organización fue impecable, y mis invitados no pararon de elogiar la variedad de bebidas y la música.",
@@ -31,13 +29,12 @@ let translations = {
     "client-opinion-5": "Me olvidé de todos los líos de la organización; ellos se ocuparon de todo y yo solo tuve que disfrutar. ¡Así da gusto!"
   },
   "en": {
-    "nav-home": "Home",
-    "nav-about": "About us",
-    "nav-services": "Services",
+    "nav-tickets": "Tickets",
+    "nav-gallery": "Gallery",
     "nav-contact": "Contact",
+    "work-in-progress": "We are working on it...",
     "hero-title": "Welcome to Xaloc Events",
-    "hero-subtitle": "You decide the plan,",
-    "hero-typing-prefix": "we provide",
+    "hero-subtitle": "You decide the plan, we provide",
     "hero-typing-words": ["the rhythm", "the atmosphere", "the drinks", "the offer", "the experience"],
     "client-opinion-1": "I never imagined my birthday would feel like a mini festival… these guys made it happen!",
     "client-opinion-2": "The organization was flawless, and my guests couldn’t stop praising the variety of drinks and the music.",
@@ -64,20 +61,45 @@ function changeLanguage(lang, evt) {
         return;
     }
     
-    // Actualizar clase active en los botones de idioma
-    document.querySelectorAll('.language-icon').forEach(btn => {
+    // Actualizar clase active en los botones de idioma (ambos menús)
+    document.querySelectorAll('.language-icon, .horizontal-language-icon').forEach(btn => {
         btn.classList.remove('active');
     });
     
     // Añadir active al botón clickeado
     if (evt && evt.target) {
-        evt.target.classList.add('active');
+        // Si se hizo clic en una imagen, obtener el botón padre
+        const button = evt.target.closest('button');
+        if (button) {
+            // Activar el botón correspondiente en ambos menús
+            const langs = ['ca', 'es', 'en'];
+            const langIndex = langs.indexOf(lang);
+            
+            document.querySelectorAll('.language-icon').forEach((btn, index) => {
+                if (index === langIndex) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.horizontal-language-icon').forEach((btn, index) => {
+                if (index === langIndex) {
+                    btn.classList.add('active');
+                }
+            });
+        }
     } else {
         // Si no hay evento (primera carga), activar el botón del idioma actual
-        const buttons = document.querySelectorAll('.language-icon');
-        buttons.forEach((btn, index) => {
-            const langs = ['ca', 'es', 'en'];
-            if (langs[index] === lang) {
+        const langs = ['ca', 'es', 'en'];
+        const langIndex = langs.indexOf(lang);
+        
+        document.querySelectorAll('.language-icon').forEach((btn, index) => {
+            if (index === langIndex) {
+                btn.classList.add('active');
+            }
+        });
+        
+        document.querySelectorAll('.horizontal-language-icon').forEach((btn, index) => {
+            if (index === langIndex) {
                 btn.classList.add('active');
             }
         });
@@ -87,7 +109,12 @@ function changeLanguage(lang, evt) {
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (translations[lang][key]) {
-            element.textContent = translations[lang][key];
+            // Si el elemento es un span dentro de un párrafo con typing, solo actualizar el textContent
+            if (element.tagName === 'SPAN' && element.parentElement.querySelector('.typing')) {
+                element.textContent = translations[lang][key];
+            } else {
+                element.textContent = translations[lang][key];
+            }
         }
     });
     

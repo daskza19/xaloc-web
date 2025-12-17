@@ -9,12 +9,13 @@
   <link rel="stylesheet" href="styles/numbers.css">
   <link rel="stylesheet" href="styles/opinions.css">
   <link rel="stylesheet" href="styles/contact.css">
+  <link rel="stylesheet" href="styles/page-sections.css">
 </head>
 <body>
   <!-- Botón de menú -->
   <button id="menu-button" onclick="toggleMenu()">☰</button>
   
-  <!-- Menú de navegación -->
+  <!-- Menú de navegación vertical (pantallas verticales) -->
   <nav id="main-menu">
     <div class="menu-section language-section">
       <button class="language-icon active" onclick="changeLanguage('ca', event)" title="Català">
@@ -28,10 +29,40 @@
       </button>
     </div>
     <div class="menu-section nav-section">
-      <a href="#home" class="nav-link" data-i18n="nav-home">Inici</a>
-      <a href="#about" class="nav-link" data-i18n="nav-about">Sobre nosaltres</a>
-      <a href="#services" class="nav-link" data-i18n="nav-services">Serveis</a>
+      <a href="#tickets" class="nav-link" data-i18n="nav-tickets">Entrades</a>
+      <a href="#gallery" class="nav-link" data-i18n="nav-gallery">Galeria</a>
       <a href="#contact" class="nav-link" data-i18n="nav-contact">Contacte</a>
+    </div>
+  </nav>
+
+  <!-- Barra de navegación horizontal (pantallas horizontales) -->
+  <nav id="horizontal-nav">
+    <div class="horizontal-nav-content">
+      <div class="horizontal-nav-links">
+        <a href="#tickets" class="horizontal-nav-link" data-i18n="nav-tickets">Entrades</a>
+        <a href="#gallery" class="horizontal-nav-link" data-i18n="nav-gallery">Galeria</a>
+        <a href="#contact" class="horizontal-nav-link" data-i18n="nav-contact">Contacte</a>
+      </div>
+      <div class="horizontal-language-dropdown">
+        <button class="language-dropdown-toggle" onclick="toggleLanguageDropdown()">
+          <img id="selected-flag" src="images/nav/cat_flag.webp" alt="Selected Language">
+          <span class="dropdown-arrow">▼</span>
+        </button>
+        <div class="language-dropdown-menu" id="language-dropdown-menu">
+          <button class="language-dropdown-item" onclick="selectLanguage('ca', event)">
+            <img src="images/nav/cat_flag.webp" alt="Català">
+            <span>Català</span>
+          </button>
+          <button class="language-dropdown-item" onclick="selectLanguage('es', event)">
+            <img src="images/nav/esp_flag.webp" alt="Español">
+            <span>Español</span>
+          </button>
+          <button class="language-dropdown-item" onclick="selectLanguage('en', event)">
+            <img src="images/nav/eng_flag.webp" alt="English">
+            <span>English</span>
+          </button>
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -88,27 +119,35 @@
     </section>
     <section class="solutions">
       <div class="typing-general">
-        <p data-i18n="hero-subtitle">Tú decideixes el pla</p>
-        <div class="typing-line">
-          <p data-i18n="hero-typing-prefix">el</p>
-          <p class="typing">ritme</p>
-        </div>
+        <p><span data-i18n="hero-subtitle">Tú decideixes el pla, nosaltres posem</span> <span class="typing-wrapper"><span class="typing">ritme</span></span></p>
       </div>
     </section>
     
     <section class="stats-section" id="stats">
       <div class="number-part">
         <div class="stat-item">
+          <div class="icon-number">
+            <img src="images/icons/calendar-icon.webp" alt="Calendar icon" class="stat-icon">
+            <div class="separator-icon-number"></div>
             <p class="stat-number" data-target="150">0</p>
-            <p class="stat-label">Eventos</p>
+          </div>
+            <p class="stat-label" data-i18n="events-subtitle"><span class="first-word">eventos</span> creados.</p>
         </div>
         <div class="stat-item">
-            <p class="stat-number" data-target="5000">0</p>
-            <p class="stat-label">Asistentes</p>
+          <div class="icon-number">
+            <img src="images/icons/person-icon.webp" alt="Calendar icon" class="stat-icon">
+            <div class="separator-icon-number"></div>
+            <p class="stat-number" data-target="12000">0</p>
+          </div>
+            <p class="stat-label" data-i18n="attendees-subtitle"><span class="first-word">asistentes</span> totales.</p>
         </div>
         <div class="stat-item">
-            <p class="stat-number" data-target="12">0</p>
-            <p class="stat-label">Años</p>
+          <div class="icon-number">
+            <img src="images/icons/clock-icon.webp" alt="Clock icon" class="stat-icon">
+            <div class="separator-icon-number"></div>
+            <p class="stat-number" data-target="4">0</p>
+          </div>
+          <p class="stat-label" data-i18n="years-subtitle"><span class="first-word">años</span> de experiencia.</p>
         </div>
       </div>
       <div class="opinions-part">
@@ -195,6 +234,21 @@
         </div>
       </div>
     </section>
+    
+    <section class="page-section" id="tickets">
+      <div class="page-content">
+        <h1 class="page-title" data-i18n="nav-tickets">Entrades</h1>
+        <p class="page-message" data-i18n="work-in-progress">Estem treballant en això...</p>
+      </div>
+    </section>
+    
+    <section class="page-section" id="gallery">
+      <div class="page-content">
+        <h1 class="page-title" data-i18n="nav-gallery">Galeria</h1>
+        <p class="page-message" data-i18n="work-in-progress">Estem treballant en això...</p>
+      </div>
+    </section>
+    
     <section class="contact-section" id="contact">
       <p data-i18n="contact-heading">Contacta amb nosaltres</p>
   </div>
@@ -204,4 +258,6 @@
 <script src="scripts/typing-effect.js"></script>
 <script src="scripts/numbers.js"></script>
 <script src="scripts/opinions.js"></script>
+<script src="scripts/horizontal-nav.js"></script>
+<script src="scripts/language-dropdown.js"></script>
 </html>

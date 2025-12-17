@@ -37,8 +37,11 @@ if (statsSection) {
             animationStarted = true; // Bloqueamos para que no se repita al volver a subir
         }
     }, {
-        threshold: 0.5 // IMPORTANTE: 0.5 significa "cuando el 50% del bloque sea visible"
+        threshold: 0.2, // Activar cuando el 20% del bloque sea visible
+        rootMargin: '0px 0px -100px 0px' // Activar un poco antes de que llegue al viewport
     });
 
     statsObserver.observe(statsSection);
+} else {
+    console.error('Stats section not found!');
 }

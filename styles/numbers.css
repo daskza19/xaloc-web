@@ -27,9 +27,13 @@ p.stat-number {
 
 p.stat-label {
     font-size: 1rem;
-    text-transform: uppercase;
     letter-spacing: 2px;
     margin-top: 10px;
+    color: white;
+}
+
+p.stat-label .first-word {
+    color: var(--primary-color);
 }
 
 .number-part{
@@ -41,6 +45,27 @@ p.stat-label {
     height: 100vh;
     justify-content: center;
     align-items: center;
+}
+
+.separator-icon-number{
+    background-color: var(--primary-color);
+    width: 0.5vh;
+    height: 6vh;
+    margin-left: 1.5vh;
+    margin-right: 2vh;
+}
+
+.icon-number{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon{
+    width: 5vh;
+    height: 5vh;
+    margin-right: 1vh;
 }
 
 .opinions-part{

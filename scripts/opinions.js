@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let currentIndex = 0;
     let isScrolling = false;
-    let mobileScrollIndex = 0;
 
     // Función para actualizar las cards visibles
     function updateCards(index) {
@@ -61,53 +60,27 @@ document.addEventListener('DOMContentLoaded', () => {
         currentIndex = index;
     }
 
-    // Función para actualizar la opinión visible en escritorio
+    // Función para actualizar la opinión visible
     function updateVisibleOpinion() {
         const scrollProgress = window.scrollY;
         const sectionTop = statsSection.offsetTop;
         const sectionHeight = statsSection.offsetHeight;
-        const opinionTop = opinionsSection.offsetTop;
         const viewportHeight = window.innerHeight;
         
-        // Detectar si estamos en móvil
-        const isMobile = window.matchMedia('(max-aspect-ratio: 1/1)').matches;
+        // Calcular basado en stats-section
+        const scrollInSection = scrollProgress - sectionTop;
+        const totalScrollable = sectionHeight - viewportHeight;
+        const scrollPercentage = Math.max(0, Math.min(1, scrollInSection / totalScrollable));
         
-        let scrollInSection, totalScrollable, scrollPercentage, newIndex;
-        
-        if (isMobile) {
-            // En móvil, calcular basado en opinions-part directamente
-            scrollInSection = scrollProgress - opinionTop;
-            // El total scrollable es 100vh por cada card
-            totalScrollable = viewportHeight * opinionCards.length;
-            scrollPercentage = Math.max(0, Math.min(1, scrollInSection / totalScrollable));
+        // Si estamos dentro de la sección
+        if (scrollProgress >= sectionTop && scrollProgress <= sectionTop + sectionHeight - viewportHeight) {
+            const newIndex = Math.min(
+                Math.floor(scrollPercentage * opinionCards.length),
+                opinionCards.length - 1
+            );
             
-            // Solo actualizar si estamos en la sección de opinions
-            if (scrollProgress >= opinionTop && scrollProgress <= sectionTop + sectionHeight - viewportHeight) {
-                newIndex = Math.min(
-                    Math.floor(scrollPercentage * opinionCards.length),
-                    opinionCards.length - 1
-                );
-                
-                if (newIndex !== currentIndex && newIndex >= 0) {
-                    updateCards(newIndex);
-                }
-            }
-        } else {
-            // En escritorio, calcular basado en stats-section
-            scrollInSection = scrollProgress - sectionTop;
-            totalScrollable = sectionHeight - viewportHeight;
-            scrollPercentage = Math.max(0, Math.min(1, scrollInSection / totalScrollable));
-            
-            // Si estamos dentro de la sección
-            if (scrollProgress >= sectionTop && scrollProgress <= sectionTop + sectionHeight - viewportHeight) {
-                newIndex = Math.min(
-                    Math.floor(scrollPercentage * opinionCards.length),
-                    opinionCards.length - 1
-                );
-                
-                if (newIndex !== currentIndex && newIndex >= 0) {
-                    updateCards(newIndex);
-                }
+            if (newIndex !== currentIndex && newIndex >= 0) {
+                updateCards(newIndex);
             }
         }
     }
@@ -125,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
             isScrolling = true;
         }
     });
-    
     
     // Actualizar al cargar
     updateVisibleOpinion();

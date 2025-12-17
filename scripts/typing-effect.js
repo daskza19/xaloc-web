@@ -8,6 +8,7 @@ let currentTypingWords = [
 
 let currentIndex = 0;
 let typingElement = null;
+let wrapperElement = null;
 let typingInterval = null;
 
 const typingDuration = 1000;
@@ -15,13 +16,28 @@ const displayDuration = 2000;
 const eraseDuration = 500;
 
 function changeWord() {
-    if (!typingElement || currentTypingWords.length === 0) return;
+    if (!typingElement || !wrapperElement || currentTypingWords.length === 0) return;
     
-    // Cambiar el texto
+    // Crear un elemento temporal invisible para medir el ancho real
+    const tempSpan = document.createElement('span');
+    tempSpan.style.visibility = 'hidden';
+    tempSpan.style.position = 'absolute';
+    tempSpan.style.whiteSpace = 'nowrap';
+    tempSpan.style.font = window.getComputedStyle(typingElement).font;
+    tempSpan.style.color = window.getComputedStyle(typingElement).color;
+    tempSpan.textContent = currentTypingWords[currentIndex];
+    document.body.appendChild(tempSpan);
+    
+    const fullWidth = tempSpan.offsetWidth;
+    document.body.removeChild(tempSpan);
+    
+    // Establecer el ancho en el wrapper (esto mantiene el espacio reservado)
+    wrapperElement.style.width = fullWidth + 'px';
+    
+    // Establecer el contenido en el elemento interno
     typingElement.textContent = currentTypingWords[currentIndex];
-    
-    // Remover y re-añadir la animación
     typingElement.style.animation = 'none';
+    typingElement.style.maxWidth = '0';
     
     // Forzar reflow
     void typingElement.offsetWidth;
@@ -51,9 +67,10 @@ window.restartTypingEffect = function(newWords) {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    typingElement = document.querySelector(".typing");
+    wrapperElement = document.querySelector("span.typing-wrapper");
+    typingElement = document.querySelector("span.typing");
     
-    if (typingElement) {
+    if (typingElement && wrapperElement) {
         // Iniciar el ciclo
         changeWord();
     }

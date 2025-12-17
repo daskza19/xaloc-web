@@ -1,0 +1,40 @@
+/* Estilos para las secciones de página */
+.page-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    padding: 4rem 2rem;
+}
+
+.page-content {
+    text-align: center;
+    max-width: 800px;
+}
+
+.page-title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: rgb(203, 178, 121);
+    margin-bottom: 2rem;
+    font-family: 'Arial Black', sans-serif;
+    text-transform: uppercase;
+}
+
+.page-message {
+    font-size: 1.5rem;
+    color: rgba(203, 178, 121, 0.7);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2.5rem;
+    }
+    
+    .page-message {
+        font-size: 1.2rem;
+    }
+}
