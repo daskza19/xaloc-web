@@ -18,6 +18,15 @@
     margin: 20px;
 }
 
+.stat-separator{
+    background-color: var(--primary-color);
+    width: 1vh;
+    height: 1vh;
+    rotate: 45deg;
+    margin: 2vh;
+    align-self: center;
+}
+
 p.stat-number {
     font-size: 4rem;
     font-family: 'Arial Black', sans-serif;

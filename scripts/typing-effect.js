@@ -9,7 +9,8 @@ let currentTypingWords = [
 let currentIndex = 0;
 let typingElement = null;
 let wrapperElement = null;
-let typingInterval = null;
+let typingTimeout1 = null;
+let typingTimeout2 = null;
 
 const typingDuration = 1000;
 const displayDuration = 2000;
@@ -46,11 +47,11 @@ function changeWord() {
     typingElement.style.animation = `typing ${typingDuration}ms steps(30, end) forwards, blink 1s step-end infinite`;
     
     // Después de escribir y mostrar, iniciar borrado
-    setTimeout(() => {
+    typingTimeout1 = setTimeout(() => {
         typingElement.style.animation = `erasing ${eraseDuration}ms steps(30, end) forwards, blink 1s step-end infinite`;
         
         // Después de borrar, cambiar a la siguiente palabra
-        setTimeout(() => {
+        typingTimeout2 = setTimeout(() => {
             currentIndex = (currentIndex + 1) % currentTypingWords.length;
             changeWord();
         }, eraseDuration);
@@ -59,6 +60,16 @@ function changeWord() {
 
 // Función para reiniciar el efecto con nuevas palabras
 window.restartTypingEffect = function(newWords) {
+    // Limpiar cualquier timeout existente
+    if (typingTimeout1) {
+        clearTimeout(typingTimeout1);
+        typingTimeout1 = null;
+    }
+    if (typingTimeout2) {
+        clearTimeout(typingTimeout2);
+        typingTimeout2 = null;
+    }
+    
     if (newWords && newWords.length > 0) {
         currentTypingWords = newWords;
         currentIndex = 0;

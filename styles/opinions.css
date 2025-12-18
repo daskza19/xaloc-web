@@ -1,5 +1,5 @@
 :root {
-    --border-inverse: 2vh;
+    --border-inverse: 1.5vh;
 }
 
 .opinion-carousel-container {
@@ -62,7 +62,6 @@
     background-size: 51% 51%;
     background-position: top left, top right, bottom left, bottom right;
     background-repeat: no-repeat;
-
 }
 
 .opinion-card.active {

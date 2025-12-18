@@ -12,26 +12,27 @@
   <link rel="stylesheet" href="styles/page-sections.css">
 </head>
 <body>
-  <!-- Botón de menú -->
-  <button id="menu-button" onclick="toggleMenu()">☰</button>
-  
-  <!-- Menú de navegación vertical (pantallas verticales) -->
+  <!-- Menú de navegación vertical (pantallas verticales) - Solo dropdown de idiomas -->
   <nav id="main-menu">
-    <div class="menu-section language-section">
-      <button class="language-icon active" onclick="changeLanguage('ca', event)" title="Català">
-        <img src="images/nav/cat_flag.webp" alt="Català">
+    <div class="vertical-language-dropdown">
+      <button class="vertical-language-dropdown-toggle" onclick="toggleVerticalLanguageDropdown()">
+        <img id="vertical-selected-flag" src="images/nav/cat_flag.webp" alt="Selected Language">
+        <span class="vertical-dropdown-arrow">▼</span>
       </button>
-      <button class="language-icon" onclick="changeLanguage('es', event)" title="Español">
-        <img src="images/nav/esp_flag.webp" alt="Español">
-      </button>
-      <button class="language-icon" onclick="changeLanguage('en', event)" title="English">
-        <img src="images/nav/eng_flag.webp" alt="English">
-      </button>
-    </div>
-    <div class="menu-section nav-section">
-      <a href="#tickets" class="nav-link" data-i18n="nav-tickets">Entrades</a>
-      <a href="#gallery" class="nav-link" data-i18n="nav-gallery">Galeria</a>
-      <a href="#contact" class="nav-link" data-i18n="nav-contact">Contacte</a>
+      <div class="vertical-language-dropdown-menu" id="vertical-language-dropdown-menu">
+        <button class="vertical-language-dropdown-item" onclick="selectVerticalLanguage('ca', event)">
+          <img src="images/nav/cat_flag.webp" alt="Català">
+          <span>Català</span>
+        </button>
+        <button class="vertical-language-dropdown-item" onclick="selectVerticalLanguage('es', event)">
+          <img src="images/nav/esp_flag.webp" alt="Español">
+          <span>Español</span>
+        </button>
+        <button class="vertical-language-dropdown-item" onclick="selectVerticalLanguage('en', event)">
+          <img src="images/nav/eng_flag.webp" alt="English">
+          <span>English</span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -133,6 +134,7 @@
           </div>
             <p class="stat-label" data-i18n="events-subtitle"><span class="first-word">eventos</span> creados.</p>
         </div>
+        <div class="stat-separator"></div>
         <div class="stat-item">
           <div class="icon-number">
             <img src="images/icons/person-icon.webp" alt="Calendar icon" class="stat-icon">
@@ -141,6 +143,7 @@
           </div>
             <p class="stat-label" data-i18n="attendees-subtitle"><span class="first-word">asistentes</span> totales.</p>
         </div>
+        <div class="stat-separator"></div>
         <div class="stat-item">
           <div class="icon-number">
             <img src="images/icons/clock-icon.webp" alt="Clock icon" class="stat-icon">
