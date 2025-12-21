@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Xaloc Landing Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Jersey+10&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Jersey+10&family=Tilt+Warp&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/vhs-effect.css">
+  <link rel="stylesheet" href="styles/stars-background.css">
   <link rel="stylesheet" href="styles/hero.css">
   <link rel="stylesheet" href="styles/solutions.css">
   <link rel="stylesheet" href="styles/language-menu.css">
@@ -70,13 +76,17 @@
   <div class="overlay"></div>
   <div class="container">
     <div class="effects">
-      <img src="images/hero/first_effect.webp" alt="Effect 1" class="first-effect">
-      <img src="images/hero/second_effect.webp" alt="Effect 2" class="second-effect">
-
+      <img src="images/effects/effect_00.webp" alt="Effect 0" class="first-effect">
+      <img src="images/effects/effect_01.webp" alt="Effect 1" class="second-effect">
+      <img src="images/effects/effect_02.webp" alt="Effect 2" class="third-effect">
     </div>
     <section class="hero">
       <img src="images/hero/hero_background.webp" alt="Hero background" class="hero-background">
       <img src="images/hero/xaloc_logo.webp" alt="Xaloc Events LOGO" class="xaloc-logo">
+      <div class="hero-tagline">
+        <p class="hero-tagline-text"><span data-i18n="hero-tagline-1">experiències que</span> <span class="sparkle-word" data-i18n="hero-tagline-sparkle">brillen</span>,</p>
+        <p class="hero-tagline-text"><span data-i18n="hero-tagline-2">records que perduren</span></p>
+      </div>
             <svg viewBox="0 0 2500 1600" xmlns="http://www.w3.org/2000/svg" class="first-text-effect">
         <path id="curve2" d="M 0 0 C 0 0 347.633 707.969 1210.899 822.158 C 2074.165 936.346 2476.109 1607.775 2476.109 1607.775" fill="transparent"/>
         <text>
@@ -132,7 +142,7 @@
             <div class="separator-icon-number"></div>
             <p class="stat-number" data-target="150">0</p>
           </div>
-            <p class="stat-label" data-i18n="events-subtitle"><span class="first-word">eventos</span> creados.</p>
+            <p class="stat-label"><span class="first-word" data-i18n="events-color">eventos</span> <span data-i18n="events-subtitle">creados.</span></p>
         </div>
         <div class="stat-separator"></div>
         <div class="stat-item">
@@ -141,7 +151,7 @@
             <div class="separator-icon-number"></div>
             <p class="stat-number" data-target="12000">0</p>
           </div>
-            <p class="stat-label" data-i18n="attendees-subtitle"><span class="first-word">asistentes</span> totales.</p>
+            <p class="stat-label"><span class="first-word" data-i18n="attendees-color">asistentes</span> <span data-i18n="attendees-subtitle">totales.</span></p>
         </div>
         <div class="stat-separator"></div>
         <div class="stat-item">
@@ -150,7 +160,7 @@
             <div class="separator-icon-number"></div>
             <p class="stat-number" data-target="4">0</p>
           </div>
-          <p class="stat-label" data-i18n="years-subtitle"><span class="first-word">años</span> de experiencia.</p>
+          <p class="stat-label"><span class="first-word" data-i18n="years-color">años</span> <span data-i18n="years-subtitle">de experiencia.</span></p>
         </div>
       </div>
       <div class="opinions-part">
@@ -256,6 +266,9 @@
       <p data-i18n="contact-heading">Contacta amb nosaltres</p>
   </div>
 </body>
+<script src="scripts/vhs-effect.js"></script>
+<script src="scripts/stars-background.js"></script>
+<script src="scripts/sparkle-effect.js"></script>
 <script src="scripts/language.js"></script>
 <script src="scripts/hero-text.js"></script>
 <script src="scripts/typing-effect.js"></script>

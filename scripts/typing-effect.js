@@ -33,7 +33,7 @@ function changeWord() {
     document.body.removeChild(tempSpan);
     
     // Establecer el ancho en el wrapper (esto mantiene el espacio reservado)
-    wrapperElement.style.width = fullWidth + 'px';
+    wrapperElement.style.width = (fullWidth + 10) + 'px';
     
     // Establecer el contenido en el elemento interno
     typingElement.textContent = currentTypingWords[currentIndex];

@@ -3,7 +3,7 @@
 }
 
 .stats-section{
-    min-height: 400vh; /* Altura extendida para scroll en horizontal */
+    min-height: 100vh; /* Solo 100vh - sin scroll extendido */
     width: 100%;
     position: relative;
     display: flex;
@@ -16,6 +16,7 @@
 
 .stat-item {
     margin: 20px;
+    max-width: 40vh;
 }
 
 .stat-separator{
@@ -29,13 +30,16 @@
 
 p.stat-number {
     font-size: 4rem;
-    font-family: 'Arial Black', sans-serif;
+    font-family: "Tilt Warp", sans-serif;
+      font-style: italic;
     color: var(--primary-color);
     display: block;
 }
 
 p.stat-label {
-    font-size: 1rem;
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 1.1rem;
     letter-spacing: 2px;
     margin-top: 10px;
     color: white;
@@ -46,14 +50,14 @@ p.stat-label .first-word {
 }
 
 .number-part{
-    position: sticky;
-    top: 0;
+    position: static; /* Ya no sticky */
     display: flex;
     flex-direction: column;
     width: 49vw;
     height: 100vh;
     justify-content: center;
     align-items: center;
+    z-index: 10;
 }
 
 .separator-icon-number{
@@ -78,8 +82,7 @@ p.stat-label .first-word {
 }
 
 .opinions-part{
-    position: sticky;
-    top: 0;
+    position: static; /* Ya no sticky */
     display: flex;
     flex-direction: column;
     width: 49vw;
@@ -87,6 +90,7 @@ p.stat-label .first-word {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    z-index: 10;
 }
 
 .person-column{
@@ -152,12 +156,14 @@ p.stat-label .first-word {
         position: relative; /* Sin sticky en móvil */
         width: 100vw;
         height: 100vh;
+        z-index: 10;
     }
     .opinions-part {
         position: sticky;
         top: 0;
         width: 100vw;
         height: 100vh;
+        z-index: 10;
     }
     p.stat-label {
         font-size: 3vh;

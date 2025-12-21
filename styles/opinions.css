@@ -86,13 +86,25 @@
 }
 
 @media (max-aspect-ratio: 1/1) {
+    :root {
+        --border-inverse: 2vh;
+    }
     .opinion-card{
-        width: 90vw;
+        width: 80vw;
         max-width: none;
-        height: 60vh;
+        height: 50vh;
         display: flex;
         flex-direction: column;
         justify-content: start;
         align-items: center;
+    }
+    
+    /* Aumentar la distancia entre las tarjetas en vertical */
+    .opinion-card.prev {
+        transform: scale(0.90) translateY(-6vh);
+    }
+
+    .opinion-card.next {
+        transform: scale(0.90) translateY(6vh);
     }
 }

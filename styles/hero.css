@@ -45,15 +45,85 @@ body {
   width: 34%;
   min-width: 34vh;
   max-width: 24vw;
-  margin-bottom: 20vh;
+  margin-bottom: 5vh;
+}
+
+/* Hero tagline */
+.hero-tagline {
+  position: relative;
+  z-index: 100;
+  margin-bottom: 15vh;
+  text-align: center;
+}
+
+.hero-tagline-text {
+  font-family: "Google Sans", sans-serif;
+  font-size: 2rem;
+  color: white;
+  margin: 0.5rem 0;
+  letter-spacing: 1px;
+  font-weight: 300;
+}
+
+.sparkle-word {
+  position: relative;
+  display: inline-block;
+  font-weight: 600;
+  color: rgb(203, 178, 121);
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+/* Contenedor de estrellas - del mismo tamaño que la palabra */
+.sparkle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1000;
+}
+
+/* Estrellas individuales con animación de fade */
+.sparkle-star {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  animation: sparkle-fade var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
+  z-index: 1001;
+}
+
+@keyframes sparkle-fade {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: var(--max-opacity);
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .hero-tagline-text {
+    font-size: 3vh;
+  }
 }
 
 .first-effect {
   position: absolute;
-  top: -1.5rem;
-  right: -1.5rem;
+  top: -0.5rem;
+  right: -0.5rem;
+  height: 40vh;
   opacity: 0.6;
-  filter: blur(1.5rem);
+  filter: blur(0.01rem);
   z-index: 55;
 }
 
@@ -62,14 +132,24 @@ body {
   top: 50vh;
   left: -1.5rem;
   opacity: 0.6;
-  filter: blur(1.5rem);
+  filter: blur(0.01rem);
   z-index: 55;
   height: 110vh;
 }
 
+.third-effect {
+  position: absolute;
+  top: 170vh;
+  right: -0.5rem;
+  height: 120vh;
+  width: auto;
+  opacity: 0.6;
+  filter: blur(0.01rem);
+}
+
 .effects {
   width: 100%;
-  height: 200vh;
+  height: 100%;
   overflow: hidden;
   position: absolute;
 }
@@ -128,11 +208,16 @@ body {
 #text-path4, #text-path5 {
   fill: rgb(203, 178, 121);
   font-weight: bold;
-  font-size: 4vh;
+  font-size: 3rem;
 }
 
 @media (max-aspect-ratio: 1/1) {
   #text-path1, #text-path2, #text-path3, #text-path4, #text-path5 {
-    font-size: 4vw;
+    font-size: 3rem;
+  }
+
+  .third-effect {
+    width: 90vw;
+    height: auto;
   }
 }

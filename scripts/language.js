@@ -7,12 +7,22 @@ let translations = {
     "work-in-progress": "Estem treballant en això...",
     "hero-title": "Benvinguts a Xaloc Events",
     "hero-subtitle": "Tú decideixes el pla, nosaltres posem",
+    "hero-tagline-1": "experiències que",
+    "hero-tagline-sparkle": "brillen",
+    "hero-tagline-2": "records que perduren",
     "hero-typing-words": ["el ritme", "l'ambient", "la beguda", "l'oferta", "l'experiència"],
     "client-opinion-1": "Mai hauria pensat que el meu aniversari semblaria un mini festival… aquests cracks ho van fer possible!",
     "client-opinion-2": "L’organització va ser impecable, i els meus convidats no van parar d’elogi﻿ar la varietat de begudes i la música.",
     "client-opinion-3": "Ens van muntar una festa de la qual els meus amics encara en parlen. Detalls molt cuidats i zero estrès. Molt recomanables!",
     "client-opinion-4": "El nostre esdeveniment d’empresa va passar de ‘reunió normaleta’ a ‘quina passada!’ en qüestió d’hores. Professionals i molt bon rotllo.",
-    "client-opinion-5": "Em vaig oblidar de tots els embolics de l’organització; ells se’n van encarregar de tot i jo només vaig haver de gaudir. Així dona gust!"
+    "client-opinion-5": "Em vaig oblidar de tots els embolics de l’organització; ells se’n van encarregar de tot i jo només vaig haver de gaudir. Així dona gust!",
+    "events-subtitle": "organitzats per a públics molt diversos: esdeveniments privats, tardeos i esdeveniments oberts al públic.",
+    "events-color": "esdeveniments",
+    "attendees-subtitle": "han gaudit de les nostres propostes al llarg de tots els nostres esdeveniments.",
+    "attendees-color": "assistents",
+    "years-subtitle": "d’experiència en el sector, avalats per una àmplia xarxa de contactes i col·laboradors clau.",
+    "years-color": "anys",
+    "contact-heading": "Contacta amb nosaltres"
     },
   "es": {
     "nav-tickets": "Entradas",
@@ -21,12 +31,22 @@ let translations = {
     "work-in-progress": "Estamos trabajando en ello...",
     "hero-title": "Bienvenidos a Xaloc Events",
     "hero-subtitle": "Tú decides el plan, nosotros ponemos",
+    "hero-tagline-1": "experiencias que",
+    "hero-tagline-sparkle": "brillan",
+    "hero-tagline-2": "recuerdos que perduran",
     "hero-typing-words": ["el ritmo", "el ambiente", "la bebida", "la oferta", "la experiencia"],
     "client-opinion-1": "Jamás pensé que mi cumpleaños iba a parecer un mini festival… ¡estos cracks lo hicieron posible!",
     "client-opinion-2": "La organización fue impecable, y mis invitados no pararon de elogiar la variedad de bebidas y la música.",
     "client-opinion-3": "Nos montaron una fiesta que aún hoy comentan mis amigos. Detalles cuidados y cero estrés. ¡Recomendadísimos!",
     "client-opinion-4": "Nuestro evento de empresa pasó de ‘reunión normalita’ a ‘¡qué pasada!’ en cuestión de horas. Profesionales y buen rollo total.",
-    "client-opinion-5": "Me olvidé de todos los líos de la organización; ellos se ocuparon de todo y yo solo tuve que disfrutar. ¡Así da gusto!"
+    "client-opinion-5": "Me olvidé de todos los líos de la organización; ellos se ocuparon de todo y yo solo tuve que disfrutar. ¡Así da gusto!",
+    "events-subtitle": "organizados para públicos muy diversos: eventos privados, tardeos y eventos abiertos al público.",
+    "events-color": "eventos",
+    "attendees-subtitle": "han disfrutado de nuestras propuestas a lo largo de todos nuestros eventos.",
+    "attendees-color": "asistentes",
+    "years-subtitle": "de experiencia en el sector, respaldados por una amplia red de contactos y colaboradores clave.",
+    "years-color": "años",
+    "contact-heading": "Contacta con nosotros"
   },
   "en": {
     "nav-tickets": "Tickets",
@@ -35,13 +55,23 @@ let translations = {
     "work-in-progress": "We are working on it...",
     "hero-title": "Welcome to Xaloc Events",
     "hero-subtitle": "You decide the plan, we provide",
+    "hero-tagline-1": "experiences that",
+    "hero-tagline-sparkle": "shine",
+    "hero-tagline-2": "memories that last",
     "hero-typing-words": ["the rhythm", "the atmosphere", "the drinks", "the offer", "the experience"],
     "client-opinion-1": "I never imagined my birthday would feel like a mini festival… these guys made it happen!",
     "client-opinion-2": "The organization was flawless, and my guests couldn’t stop praising the variety of drinks and the music.",
     "client-opinion-3": "They put together a party my friends still talk about. Great attention to detail and zero stress. Highly recommended!",
     "client-opinion-4": "Our company event went from a ‘regular meeting’ to ‘wow, this is amazing!’ in just a few hours. Super professional and great vibes all around.",
-    "client-opinion-5": "I forgot about all the planning headaches; they handled everything and I just had to enjoy. That’s how it should be!"
-    }
+    "client-opinion-5": "I forgot about all the planning headaches; they handled everything and I just had to enjoy. That’s how it should be!",
+    "events-subtitle": "organized for very diverse audiences: private events, afternoon parties, and public events.",
+    "events-color": "events",
+    "attendees-subtitle": "have enjoyed our proposals across all of our events.",
+    "attendees-color": "attendees",
+    "years-subtitle": "of experience in the industry, supported by a strong network of contacts and key collaborators.",
+    "years-color": "years",
+    "contact-heading": "Contact us"
+}
 };
 let typingWords = [];
 
@@ -125,6 +155,11 @@ function changeLanguage(lang, evt) {
         if (window.restartTypingEffect) {
             window.restartTypingEffect(typingWords);
         }
+    }
+    
+    // Reiniciar el efecto de estrellas después de actualizar las traducciones
+    if (window.restartSparkleEffect) {
+        setTimeout(window.restartSparkleEffect, 100);
     }
 }
 

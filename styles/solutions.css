@@ -21,8 +21,9 @@
 }
 
 p{
-    font-family: 'Arial Black', sans-serif;
-    color: white;
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    color: rgb(240,240,240);
     margin: 0;
     font-size: 4rem;
     line-height: 1;
@@ -44,6 +45,8 @@ span.typing-wrapper {
 
 span.typing {
     color: var(--primary-color);
+      font-family: "Tilt Warp", sans-serif;
+      font-style: italic;
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;

@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const opinionsSection = document.querySelector('.opinions-part');
-    const statsSection = document.querySelector('.stats-section');
 
-    if (!opinionsSection || !statsSection) {
-        console.error('Sections not found!');
+    if (!opinionsSection) {
+        console.error('Opinions section not found!');
         return;
     }
 
@@ -31,11 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     opinionsSection.innerHTML = '';
     opinionsSection.appendChild(carouselContainer);
     
-    // Establecer variable CSS con el número de cards para calcular altura en móvil
-    document.documentElement.style.setProperty('--opinion-cards-count', opinionCards.length);
-    
     let currentIndex = 0;
-    let isScrolling = false;
+    let autoPlayInterval;
 
     // Función para actualizar las cards visibles
     function updateCards(index) {
@@ -44,61 +40,227 @@ document.addEventListener('DOMContentLoaded', () => {
             card.classList.remove('active', 'prev', 'next');
         });
         
-        // Activar la nueva (centro)
+        // Calcular índices (con loop circular)
+        const prevIndex = (index - 1 + opinionCards.length) % opinionCards.length;
+        const nextIndex = (index + 1) % opinionCards.length;
+        
+        // Activar las cards correspondientes
         opinionCards[index].classList.add('active');
-        
-        // Mostrar la anterior (arriba)
-        if (index > 0) {
-            opinionCards[index - 1].classList.add('prev');
-        }
-        
-        // Mostrar la siguiente (abajo)
-        if (index < opinionCards.length - 1) {
-            opinionCards[index + 1].classList.add('next');
-        }
+        opinionCards[prevIndex].classList.add('prev');
+        opinionCards[nextIndex].classList.add('next');
         
         currentIndex = index;
     }
 
-    // Función para actualizar la opinión visible
-    function updateVisibleOpinion() {
-        const scrollProgress = window.scrollY;
-        const sectionTop = statsSection.offsetTop;
-        const sectionHeight = statsSection.offsetHeight;
-        const viewportHeight = window.innerHeight;
+    // Función para avanzar automáticamente
+    function autoAdvance() {
+        const nextIndex = (currentIndex + 1) % opinionCards.length;
+        updateCards(nextIndex);
+    }
+
+    // Función para ir a la siguiente opinión
+    function goToNext() {
+        const nextIndex = (currentIndex + 1) % opinionCards.length;
+        updateCards(nextIndex);
+    }
+
+    // Función para ir a la opinión anterior
+    function goToPrev() {
+        const prevIndex = (currentIndex - 1 + opinionCards.length) % opinionCards.length;
+        updateCards(prevIndex);
+    }
+
+    // Función para reiniciar el autoplay
+    function resetAutoPlay() {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = setInterval(autoAdvance, 4000);
+    }
+
+    // Variables para drag & drop
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    // Función para verificar si el punto está dentro del área de la card activa + margen
+    function isWithinActiveCardArea(x, y) {
+        const activeCard = opinionCards[currentIndex];
+        if (!activeCard) return false;
+
+        const rect = activeCard.getBoundingClientRect();
+        const margin = window.innerHeight * 0.1; // 10vh en píxeles
+
+        return (
+            x >= rect.left - margin &&
+            x <= rect.right + margin &&
+            y >= rect.top - margin &&
+            y <= rect.bottom + margin
+        );
+    }
+
+    // Función para aplicar transformación durante drag
+    function applyDragTransform() {
+        const activeCard = opinionCards[currentIndex];
+        if (!activeCard || !isDragging) return;
+
+        activeCard.style.transform = `scale(1) translateY(0) translateX(${dragOffsetX}px) translateY(${dragOffsetY}px)`;
+        activeCard.style.transition = 'none';
+    }
+
+    // Función para resetear transformación
+    function resetDragTransform() {
+        const activeCard = opinionCards[currentIndex];
+        if (!activeCard) return;
+
+        activeCard.style.transform = '';
+        activeCard.style.transition = '';
+    }
+
+    // Eventos de mouse
+    carouselContainer.addEventListener('mousedown', (e) => {
+        // Verificar si el clic está dentro del área permitida
+        if (!isWithinActiveCardArea(e.clientX, e.clientY)) {
+            return;
+        }
+
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        currentX = startX;
+        currentY = startY;
+        carouselContainer.style.cursor = 'grabbing';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        currentX = e.clientX;
+        currentY = e.clientY;
+        dragOffsetX = currentX - startX;
+        dragOffsetY = currentY - startY;
+        applyDragTransform();
+    });
+
+    document.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
         
-        // Calcular basado en stats-section
-        const scrollInSection = scrollProgress - sectionTop;
-        const totalScrollable = sectionHeight - viewportHeight;
-        const scrollPercentage = Math.max(0, Math.min(1, scrollInSection / totalScrollable));
+        const deltaX = currentX - startX;
+        const deltaY = currentY - startY;
+        const threshold = 50;
         
-        // Si estamos dentro de la sección
-        if (scrollProgress >= sectionTop && scrollProgress <= sectionTop + sectionHeight - viewportHeight) {
-            const newIndex = Math.min(
-                Math.floor(scrollPercentage * opinionCards.length),
-                opinionCards.length - 1
-            );
-            
-            if (newIndex !== currentIndex && newIndex >= 0) {
-                updateCards(newIndex);
+        resetDragTransform();
+        
+        // Si el movimiento horizontal es mayor que el vertical
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (deltaX > threshold) {
+                // Swipe derecha -> anterior
+                goToPrev();
+                resetAutoPlay();
+            } else if (deltaX < -threshold) {
+                // Swipe izquierda -> siguiente
+                goToNext();
+                resetAutoPlay();
+            }
+        } else {
+            // Movimiento vertical
+            if (deltaY > threshold) {
+                // Swipe abajo -> anterior
+                goToPrev();
+                resetAutoPlay();
+            } else if (deltaY < -threshold) {
+                // Swipe arriba -> siguiente
+                goToNext();
+                resetAutoPlay();
             }
         }
-    }
-    
-    // Mostrar las primeras tres opiniones al inicio
+        
+        isDragging = false;
+        dragOffsetX = 0;
+        dragOffsetY = 0;
+        carouselContainer.style.cursor = 'grab';
+    });
+
+    // Eventos táctiles (touch) - prevenir scroll en mobile
+    carouselContainer.addEventListener('touchstart', (e) => {
+        // Verificar si el toque está dentro del área permitida
+        if (!isWithinActiveCardArea(e.touches[0].clientX, e.touches[0].clientY)) {
+            return;
+        }
+
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        currentX = startX;
+        currentY = startY;
+        // No hacer preventDefault aquí para permitir detección inicial
+    }, { passive: true });
+
+    carouselContainer.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        
+        currentX = e.touches[0].clientX;
+        currentY = e.touches[0].clientY;
+        dragOffsetX = currentX - startX;
+        dragOffsetY = currentY - startY;
+        
+        // Prevenir scroll solo si hay movimiento significativo
+        if (Math.abs(dragOffsetX) > 10 || Math.abs(dragOffsetY) > 10) {
+            e.preventDefault();
+            applyDragTransform();
+        }
+    }, { passive: false });
+
+    carouselContainer.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        
+        const deltaX = currentX - startX;
+        const deltaY = currentY - startY;
+        const threshold = 50;
+        
+        resetDragTransform();
+        
+        // Si el movimiento horizontal es mayor que el vertical
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (deltaX > threshold) {
+                // Swipe derecha -> anterior
+                goToPrev();
+                resetAutoPlay();
+            } else if (deltaX < -threshold) {
+                // Swipe izquierda -> siguiente
+                goToNext();
+                resetAutoPlay();
+            }
+        } else {
+            // Movimiento vertical
+            if (deltaY > threshold) {
+                // Swipe abajo -> anterior
+                goToPrev();
+                resetAutoPlay();
+            } else if (deltaY < -threshold) {
+                // Swipe arriba -> siguiente
+                goToNext();
+                resetAutoPlay();
+            }
+        }
+        
+        isDragging = false;
+        dragOffsetX = 0;
+        dragOffsetY = 0;
+    });
+
+    // Mostrar la primera opinión al inicio
     updateCards(0);
     
-    // Escuchar el scroll
-    window.addEventListener('scroll', () => {
-        if (!isScrolling) {
-            window.requestAnimationFrame(() => {
-                updateVisibleOpinion();
-                isScrolling = false;
-            });
-            isScrolling = true;
-        }
-    });
+    // Configurar intervalo automático (cambia cada 4 segundos)
+    autoPlayInterval = setInterval(autoAdvance, 4000);
     
-    // Actualizar al cargar
-    updateVisibleOpinion();
+    // Estilo de cursor
+    carouselContainer.style.cursor = 'grab';
+    
+    console.log('Auto-carousel with drag & drop initialized with', opinionCards.length, 'cards');
 });
+
+
