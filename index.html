@@ -263,8 +263,53 @@
     </section>
     
     <section class="contact-section" id="contact">
-      <p data-i18n="contact-heading">Contacta amb nosaltres</p>
-  </div>
+      <div class="contact-container">
+        <h1 class="contact-title-vertical" data-i18n="contact-title">Contacte</h1>
+        <div class="contact-form-wrapper">
+          <div class="contact-inputs-column">
+            <div class="name-contact-part">
+              <h2 class="name-contact-label" data-i18n="name-contact-label">NOM:</h2>
+              <input type="text" class="name-contact-input" data-i18n-placeholder="name-placeholder" placeholder="Escriu el teu nom">
+            </div>
+            <div class="email-contact-part">
+              <h2 class="email-contact-label" data-i18n="email-contact-label">CORREU ELECTRÒNIC:</h2>
+              <input type="email" class="email-contact-input" data-i18n-placeholder="email-placeholder" placeholder="Escriu el teu correu electrònic">
+            </div>
+            <div class="type-contact-part">
+              <h2 class="subject-contact-label" data-i18n="subject-contact-label">TEMA:</h2>
+              <select class="subject-contact-input">
+                <option value="" disabled selected data-i18n="subject-placeholder">Selecciona un tema</option>
+                <option value="fiesta-empresa" data-i18n="subject-company">Fiesta empresa</option>
+                <option value="particular" data-i18n="subject-private">Particular</option>
+                <option value="duda-eventos" data-i18n="subject-question">Duda eventos</option>
+              </select>
+            </div>
+            <div class="text-contact-part">
+              <h2 class="name-contact-label" data-i18n="message-contact-label">MISSATGE:</h2>
+              <textarea class="text-contact-input" data-i18n-placeholder="message-placeholder" placeholder="Escriu el teu missatge"></textarea>
+            </div>
+          </div>
+          <button class="send-contact-button send-button-text" data-i18n="send-contact-button">ENVIAR</button>
+          <button class="send-contact-button send-button-icon">
+            <img src="images/icons/send-icon.webp" alt="Enviar">
+          </button>
+        </div>
+      </div>
+      <div class="social-media-row">
+        <a href="https://www.instagram.com/xalocevents" target="_blank" class="social-media-button">
+          <img src="images/social/instagram.webp" alt="Instagram">
+        </a>
+        <a href="https://www.tiktok.com/@xalocevents" target="_blank" class="social-media-button">
+          <img src="images/social/tiktok.webp" alt="TikTok">
+        </a>
+        <a href="https://twitter.com/xalocevents" target="_blank" class="social-media-button">
+          <img src="images/social/twitter.webp" alt="Twitter">
+        </a>
+      </div>
+      <div class="footer-text-row">
+        <p>© 2025 Xaloc Events. Tots els drets reservats.</p>
+      </div>
+    </section>
 </body>
 <script src="scripts/vhs-effect.js"></script>
 <script src="scripts/stars-background.js"></script>
@@ -276,4 +321,6 @@
 <script src="scripts/opinions.js"></script>
 <script src="scripts/horizontal-nav.js"></script>
 <script src="scripts/language-dropdown.js"></script>
+<script src="scripts/contact-form.js"></script>
+<script src="scripts/contact-title-size.js"></script>
 </html>

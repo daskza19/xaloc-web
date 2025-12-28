@@ -1,5 +1,9 @@
 :root {
     --primary-color: rgb(203, 178, 121);
+    --primary-color-hover: rgb(213, 188, 131);
+    --contact-bg-color: rgb(203, 178, 121);
+    --secondary-color: rgb(109, 95, 65);
+    --secondary-color-hover: rgb(119, 105, 75);
 }
 
 .stats-section{

@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!activeCard) return false;
 
         const rect = activeCard.getBoundingClientRect();
-        const margin = window.innerHeight * 0.1; // 10vh en píxeles
+        const margin = -window.innerHeight * 0.05; // Margen negativo (área más pequeña que la card)
 
         return (
             x >= rect.left - margin &&

@@ -3,8 +3,8 @@
   // Configuración
   const config = {
     numStars: 50, // Número de estrellas
-    minSize: 2, // Tamaño mínimo de estrella (px)
-    maxSize: 14, // Tamaño máximo de estrella (px)
+    minSize: 0.3, // Tamaño mínimo de estrella (% de altura de ventana)
+    maxSize: 2, // Tamaño máximo de estrella (% de altura de ventana)
     minDuration: 2, // Duración mínima de animación (s)
     maxDuration: 5, // Duración máxima de animación (s)
     minOpacity: 0.1, // Opacidad mínima
@@ -37,10 +37,10 @@
     star.style.left = `${randomInRange(0, 100)}%`;
     star.style.top = `${randomInRange(0, 100)}%`;
     
-    // Tamaño aleatorio
-    const size = randomInRange(config.minSize, config.maxSize);
-    star.style.width = `${size}px`;
-    star.style.height = `${size}px`;
+    // Tamaño aleatorio basado en la altura de la ventana
+    const sizeVh = randomInRange(config.minSize, config.maxSize);
+    star.style.width = `${sizeVh}vh`;
+    star.style.height = `${sizeVh}vh`;
     
     // Duración aleatoria
     const duration = randomInRange(config.minDuration, config.maxDuration);

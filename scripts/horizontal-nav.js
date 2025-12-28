@@ -19,4 +19,34 @@ window.addEventListener('scroll', function() {
             menuButton.classList.remove('visible');
         }
     }
+    
+    // Scroll spy - actualizar el enlace activo según la sección visible
+    updateActiveNavLink();
 });
+
+function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.horizontal-nav-link');
+    
+    let currentSection = '';
+    const scrollPosition = window.scrollY + 100; // Offset para activar un poco antes
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Llamar una vez al cargar la página
+document.addEventListener('DOMContentLoaded', updateActiveNavLink);

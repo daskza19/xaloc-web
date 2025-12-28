@@ -22,7 +22,20 @@ let translations = {
     "attendees-color": "assistents",
     "years-subtitle": "d’experiència en el sector, avalats per una àmplia xarxa de contactes i col·laboradors clau.",
     "years-color": "anys",
-    "contact-heading": "Contacta amb nosaltres"
+    "contact-heading": "Contacta amb nosaltres",
+    "contact-title": "Contacte",
+    "name-contact-label": "NOM:",
+    "name-placeholder": "Escriu el teu nom",
+    "email-contact-label": "CORREU ELECTRÒNIC:",
+    "email-placeholder": "Escriu el teu correu electrònic",
+    "subject-contact-label": "TEMA:",
+    "subject-placeholder": "Selecciona un tema",
+    "subject-company": "Festa empresa",
+    "subject-private": "Particular",
+    "subject-question": "Dubte esdeveniments",
+    "message-contact-label": "MISSATGE:",
+    "message-placeholder": "Escriu el teu missatge",
+    "send-contact-button": "ENVIAR"
     },
   "es": {
     "nav-tickets": "Entradas",
@@ -46,7 +59,20 @@ let translations = {
     "attendees-color": "asistentes",
     "years-subtitle": "de experiencia en el sector, respaldados por una amplia red de contactos y colaboradores clave.",
     "years-color": "años",
-    "contact-heading": "Contacta con nosotros"
+    "contact-heading": "Contacta con nosotros",
+    "contact-title": "Contacto",
+    "name-contact-label": "NOMBRE:",
+    "name-placeholder": "Escribe tu nombre",
+    "email-contact-label": "CORREO ELECTRÓNICO:",
+    "email-placeholder": "Escribe tu correo electrónico",
+    "subject-contact-label": "TEMA:",
+    "subject-placeholder": "Selecciona un tema",
+    "subject-company": "Fiesta empresa",
+    "subject-private": "Particular",
+    "subject-question": "Duda eventos",
+    "message-contact-label": "MENSAJE:",
+    "message-placeholder": "Escribe tu mensaje",
+    "send-contact-button": "ENVIAR"
   },
   "en": {
     "nav-tickets": "Tickets",
@@ -70,7 +96,20 @@ let translations = {
     "attendees-color": "attendees",
     "years-subtitle": "of experience in the industry, supported by a strong network of contacts and key collaborators.",
     "years-color": "years",
-    "contact-heading": "Contact us"
+    "contact-heading": "Contact us",
+    "contact-title": "Contact",
+    "name-contact-label": "NAME:",
+    "name-placeholder": "Enter your name",
+    "email-contact-label": "EMAIL:",
+    "email-placeholder": "Enter your email",
+    "subject-contact-label": "SUBJECT:",
+    "subject-placeholder": "Select a subject",
+    "subject-company": "Company party",
+    "subject-private": "Private",
+    "subject-question": "Event inquiry",
+    "message-contact-label": "MESSAGE:",
+    "message-placeholder": "Enter your message",
+    "send-contact-button": "SEND"
 }
 };
 let typingWords = [];
@@ -135,7 +174,7 @@ function changeLanguage(lang, evt) {
         });
     }
     
-    // Actualizar todos los elementos con data-i18n
+    // Actualizar todos los elementos with data-i18n
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (translations[lang][key]) {
@@ -145,6 +184,14 @@ function changeLanguage(lang, evt) {
             } else {
                 element.textContent = translations[lang][key];
             }
+        }
+    });
+    
+    // Actualizar placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) {
+            element.placeholder = translations[lang][key];
         }
     });
     
