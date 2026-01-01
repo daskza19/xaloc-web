@@ -1,4 +1,3 @@
-
 .contact-section{
     height: 100vh;
     display: flex;
@@ -188,6 +187,44 @@
 
 .send-button-text {
     display: block;
+}
+
+.toast-success-message, .toast-fail-message {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) translateY(100%);
+    z-index: 100000000;
+    padding: 1vh 2vh;
+    border-radius: var(--border-radius-low);
+    box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+    pointer-events: none;
+    text-align: center;
+    transition: opacity 0.4s, transform 0.6s cubic-bezier(.4,1.6,.4,1);
+    backdrop-filter: blur(10px) saturate(1.2);
+    border: 1.5px solid rgba(255,255,255,0.08);
+}
+.toast-success-message {
+    background: var(--toast-success-color);
+}
+.toast-fail-message {
+    background: var(--toast-fail-color);
+}
+
+.toast-text {
+    font-family: "Google Sans", sans-serif;
+    font-size: 2vh;
+    margin: 0;
+    padding: 0;
+}
+
+.toast-show {
+    opacity: 1 !important;
+    transform: translateX(-50%) translateY(-2em) !important;
+}
+.toast-hide {
+    opacity: 0 !important;
+    transform: translateX(-50%) translateY(100%) !important;
 }
 
 /* Ajuste para pantallas horizontales cuando aparece el nav horizontal */

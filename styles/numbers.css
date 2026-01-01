@@ -4,6 +4,9 @@
     --contact-bg-color: rgb(203, 178, 121);
     --secondary-color: rgb(109, 95, 65);
     --secondary-color-hover: rgb(119, 105, 75);
+    --toast-success-color: rgba(55, 105, 55, 0.45);
+    --toast-fail-color: rgba(124, 62, 62, 0.45);
+    --border-radius-low: 0.5vh;
 }
 
 .stats-section{

@@ -35,7 +35,9 @@ let translations = {
     "subject-question": "Dubte esdeveniments",
     "message-contact-label": "MISSATGE:",
     "message-placeholder": "Escriu el teu missatge",
-    "send-contact-button": "ENVIAR"
+    "send-contact-button": "ENVIAR",
+    "toast-success-message": "Missatge enviat correctament!",
+    "toast-fail-message": "Error en enviar el missatge!"
     },
   "es": {
     "nav-tickets": "Entradas",
@@ -72,7 +74,9 @@ let translations = {
     "subject-question": "Duda eventos",
     "message-contact-label": "MENSAJE:",
     "message-placeholder": "Escribe tu mensaje",
-    "send-contact-button": "ENVIAR"
+    "send-contact-button": "ENVIAR",
+    "toast-success-message": "¡Mensaje enviado correctamente!",
+    "toast-fail-message": "Error al enviar el mensaje!"
   },
   "en": {
     "nav-tickets": "Tickets",
@@ -109,7 +113,9 @@ let translations = {
     "subject-question": "Event inquiry",
     "message-contact-label": "MESSAGE:",
     "message-placeholder": "Enter your message",
-    "send-contact-button": "SEND"
+    "send-contact-button": "SEND",
+    "toast-success-message": "Message sent successfully!",
+    "toast-fail-message": "Error sending the message!"
 }
 };
 let typingWords = [];

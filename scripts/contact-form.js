@@ -28,7 +28,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Validar antes de enviar
+    // --- Mostrar toast reutilizando los elementos del HTML ---
+    function showToast(type) {
+        const toast = document.querySelector(type === 'success' ? '.toast-success-message' : '.toast-fail-message');
+        if (!toast) return;
+        toast.style.display = '';
+        toast.classList.remove('toast-hide');
+        toast.classList.add('toast-show');
+        setTimeout(() => {
+            toast.classList.remove('toast-show');
+            toast.classList.add('toast-hide');
+        }, 5000);
+    }
+
     sendButton.addEventListener('click', function(e) {
         e.preventDefault();
         
@@ -63,10 +75,63 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (!hasErrors) {
-            // Aquí puedes añadir la lógica para enviar el formulario
-            console.log('Formulario válido - listo para enviar');
-            // Por ejemplo: enviar datos a un servidor
+            // Guardar datos en Supabase
+            const contactData = {
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                contact_type: subjectSelect.value,
+                message: messageInput.value.trim()
+            };
+
+            function saveContactToSupabase(data) {
+                return window.supabase
+                    .from('form_users')
+                    .insert([data]);
+            }
+
+            function showSuccess() {
+                showToast('success');
+                nameInput.value = '';
+                emailInput.value = '';
+                subjectSelect.value = '';
+                messageInput.value = '';
+            }
+
+            function showError() {
+                showToast('fail');
+            }
+
+            if (!window.supabase) {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+                script.onload = () => {
+                    const SUPABASE_URL = 'https://wwrklkdvuthcwcbowkeb.supabase.co';
+                    const SUPABASE_KEY = 'sb_publishable_SI-Y_hDJhQyOxyyjvH3QPw_-WYPdbuv';
+                    window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                    saveContactToSupabase(contactData)
+                        .then(({ error }) => {
+                            if (!error) {
+                                showSuccess();
+                            } else {
+                                showError();
+                            }
+                        });
+                };
+                document.body.appendChild(script);
+            } else {
+                saveContactToSupabase(contactData)
+                    .then(({ error }) => {
+                        if (!error) {
+                            showSuccess();
+                        } else {
+                            showError();
+                        }
+                    });
+            }
+        } else {
+            showToast('fail');
         }
+
     });
 
     // Limpiar errores al escribir en otros campos

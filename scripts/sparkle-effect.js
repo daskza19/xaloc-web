@@ -9,8 +9,6 @@
       return;
     }
 
-    console.log('Sparkle effect initialized on:', sparkleWord);
-
     // Limpiar contenedor previo si existe
     const existingContainer = sparkleWord.querySelector('.sparkle-container');
     if (existingContainer) {
@@ -24,8 +22,6 @@
     sparkleContainer.style.zIndex = '1000';
     sparkleWord.style.position = 'relative';
     sparkleWord.appendChild(sparkleContainer);
-
-    console.log('Sparkle container created:', sparkleContainer);
 
     // Configuración
     const config = {
@@ -80,15 +76,12 @@
       star.style.setProperty('--max-opacity', maxOpacity);
       
       sparkleContainer.appendChild(star);
-      console.log('Star created:', star);
     }
 
     // Crear todas las estrellas
     for (let i = 0; i < config.numStars; i++) {
       createStar();
     }
-    
-    console.log('Created', config.numStars, 'sparkle stars in container');
   }
 
   // Inicializar con reintento
