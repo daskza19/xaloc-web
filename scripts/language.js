@@ -236,9 +236,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         const menu = document.getElementById('main-menu');
         const button = document.getElementById('menu-button');
-        
-        if (!menu.contains(e.target) && !button.contains(e.target)) {
-            closeMenu();
+        if (menu && button) {
+            if (!menu.contains(e.target) && !button.contains(e.target)) {
+                closeMenu();
+            }
         }
     });
     

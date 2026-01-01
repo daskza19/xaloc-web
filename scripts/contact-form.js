@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const nameInput = document.querySelector('.name-contact-input');
     const subjectSelect = document.querySelector('.subject-contact-input');
     const messageInput = document.querySelector('.text-contact-input');
+    const charCount = document.getElementById('message-char-count');
     const sendButton = document.querySelector('.send-contact-button');
 
     // Función para validar email
@@ -41,40 +42,47 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
-    sendButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        let hasErrors = false;
+    // Asegurar que ambos botones envían el formulario
+    const sendButtons = document.querySelectorAll('.send-contact-button');
+    sendButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            let hasErrors = false;
 
-        // Validar email
-        if (!emailInput.value || !validateEmail(emailInput.value)) {
-            emailInput.classList.add('input-error');
-            hasErrors = true;
-        }
+            // Validar email
+            if (!emailInput.value || !validateEmail(emailInput.value)) {
+                emailInput.classList.add('input-error');
+                hasErrors = true;
+            }
 
-        // Validar campos requeridos
-        if (!nameInput.value.trim()) {
-            nameInput.classList.add('input-error');
-            hasErrors = true;
-        } else {
-            nameInput.classList.remove('input-error');
-        }
+            // Validar campos requeridos
+            if (!nameInput.value.trim()) {
+                nameInput.classList.add('input-error');
+                hasErrors = true;
+            } else {
+                nameInput.classList.remove('input-error');
+            }
 
-        if (!subjectSelect.value) {
-            subjectSelect.classList.add('input-error');
-            hasErrors = true;
-        } else {
-            subjectSelect.classList.remove('input-error');
-        }
+            if (!subjectSelect.value) {
+                subjectSelect.classList.add('input-error');
+                hasErrors = true;
+            } else {
+                subjectSelect.classList.remove('input-error');
+            }
 
-        if (!messageInput.value.trim()) {
-            messageInput.classList.add('input-error');
-            hasErrors = true;
-        } else {
-            messageInput.classList.remove('input-error');
-        }
+            if (!messageInput.value.trim()) {
+                messageInput.classList.add('input-error');
+                hasErrors = true;
+            } else {
+                messageInput.classList.remove('input-error');
+            }
 
-        if (!hasErrors) {
+            if (hasErrors) {
+                showToast('fail');
+                return;
+            }
+
             // Guardar datos en Supabase
             const contactData = {
                 name: nameInput.value.trim(),
@@ -128,10 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     });
             }
-        } else {
-            showToast('fail');
-        }
-
+        });
     });
 
     // Limpiar errores al escribir en otros campos
@@ -146,4 +151,11 @@ document.addEventListener('DOMContentLoaded', function() {
     messageInput.addEventListener('input', function() {
         this.classList.remove('input-error');
     });
+
+    if (messageInput && charCount) {
+        charCount.textContent = messageInput.value.length;
+        messageInput.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+    }
 });

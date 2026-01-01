@@ -296,8 +296,8 @@
 }
 
 .social-media-button img {
-    width: 4vh;
-    height: 4vh;
+    width: 2.5vh;
+    height: 2.5vh;
     object-fit: contain;
     transition: all 0.3s ease;
 }
