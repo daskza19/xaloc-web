@@ -57,6 +57,7 @@ body {
   min-width: 34vh;
   max-width: 24vw;
   margin-bottom: 5vh;
+  filter: blur(0.03vh);
 }
 
 /* Hero tagline */

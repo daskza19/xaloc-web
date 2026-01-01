@@ -1,6 +1,7 @@
 let currentLanguage = 'ca';
 let translations = {
   "ca": {
+    "nav-about": "Sobre nosaltres",
     "nav-tickets": "Entrades",
     "nav-gallery": "Galeria",
     "nav-contact": "Contacte",
@@ -40,6 +41,7 @@ let translations = {
     "toast-fail-message": "Error en enviar el missatge!"
     },
   "es": {
+    "nav-about": "Sobre nosotros",
     "nav-tickets": "Entradas",
     "nav-gallery": "Galería",
     "nav-contact": "Contacto",
@@ -79,6 +81,7 @@ let translations = {
     "toast-fail-message": "Error al enviar el mensaje!"
   },
   "en": {
+    "nav-about": "About us",
     "nav-tickets": "Tickets",
     "nav-gallery": "Gallery",
     "nav-contact": "Contact",

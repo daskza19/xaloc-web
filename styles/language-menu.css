@@ -123,19 +123,46 @@
     width: 80vw;
     z-index: 998;
     transition: all 0.4s ease;
-    background: 
-        radial-gradient(circle at top left, transparent var(--border-inverse), rgb(203, 178, 121) var(--border-inverse)),
-        radial-gradient(circle at top right, transparent var(--border-inverse), rgb(203, 178, 121) var(--border-inverse)),
-        radial-gradient(circle at bottom left, transparent var(--border-inverse), rgb(203, 178, 121) var(--border-inverse)),
-        radial-gradient(circle at bottom right, transparent var(--border-inverse), rgb(203, 178, 121) var(--border-inverse));
-    background-size: 51% 51%;
-    background-position: top left, top right, bottom left, bottom right;
-    background-repeat: no-repeat;
+    /* El fondo y el efecto ticket van SOLO en el ::before */
+    background: none;
 }
 
 #horizontal-nav.sticky {
     top: 1.5rem;
     transform: translate(-50%, 0);
+}
+
+:root {
+    --border-inverse: 1.2rem;
+}
+
+#horizontal-nav::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--primary-blur-color);
+    backdrop-filter: blur(1vh) grayscale(50%) brightness(60%);
+    border-style: inset;
+    border: 4px rgba(255,255,255,0.08);
+    mask-image:
+      radial-gradient(circle at top left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at top right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px));
+    -webkit-mask-image:
+      radial-gradient(circle at top left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at top right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px));
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+    pointer-events: none;
+}
+
+#horizontal-nav > * {
+    position: relative;
+    z-index: 1;
 }
 
 .horizontal-nav-content {
@@ -155,33 +182,33 @@
 }
 
 .language-dropdown-toggle {
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 2px solid rgba(0, 0, 0, 0.3);
+    background-color: var(--secondary-color);
+    border: 0.1vh solid var(--secondary-color-hover);
     cursor: pointer;
     padding: 0.3rem 0.6rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    border-radius: 6px;
+    border-radius: var(--border-radius-low);
     transition: all 0.3s ease;
     min-width: 70px;
 }
 
 .language-dropdown-toggle:hover {
-    background-color: rgba(0, 0, 0, 0.15);
-    border-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--secondary-color-hover);
+    border: 0.1vh solid var(--secondary-color-hover);
 }
 
 .language-dropdown-toggle img {
     width: 24px;
     height: 24px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: var(--border-radius-low);
 }
 
 .dropdown-arrow {
     font-size: 0.8rem;
-    color: rgba(0, 0, 0, 0.7);
+    color: var(--white-text-color);
     transition: transform 0.3s ease;
 }
 
@@ -248,11 +275,11 @@
 }
 
 .horizontal-nav-link {
-    color: rgba(0, 0, 0, 0.85);
-    text-decoration: none;
-    font-size: 0.9rem;
+    font-family: "Google Sans", sans-serif;
     font-weight: bold;
-    font-family: 'Arial Black', sans-serif;
+    color: var(--white-text-color);
+    text-decoration: none;
+    font-size: 2vh;
     padding: 0.5rem 1.2rem;
     transition: all 0.3s ease;
     background-color: transparent;
@@ -262,16 +289,15 @@
 }
 
 .horizontal-nav-link:hover {
-    color: rgba(0, 0, 0, 1);
-    background-color: rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color-hover);
 }
 
 .horizontal-nav-link.active {
-    color: rgba(0, 0, 0, 1);
-    background-color: rgba(0, 0, 0, 0.15);
-    border-color: rgba(0, 0, 0, 0.4);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: white;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color-hover);
 }
 
 @media (max-width: 768px) {
