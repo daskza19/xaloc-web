@@ -7,19 +7,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Jersey+10&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Jersey+10&family=Tilt+Warp&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/vhs-effect.css">
-  <link rel="stylesheet" href="styles/stars-background.css">
+  <link rel="stylesheet" href="styles/general/waves-effect.css">
+  <link rel="stylesheet" href="styles/general/stars-background.css">
+  <link rel="stylesheet" href="styles/general/language-menu.css">
+  <link rel="stylesheet" href="styles/general/root.css">
   <link rel="stylesheet" href="styles/hero.css">
-  <link rel="stylesheet" href="styles/solutions.css">
-  <link rel="stylesheet" href="styles/language-menu.css">
-  <link rel="stylesheet" href="styles/numbers.css">
-  <link rel="stylesheet" href="styles/opinions.css">
+  <link rel="stylesheet" href="styles/typing.css">
+  <link rel="stylesheet" href="styles/about.css">
   <link rel="stylesheet" href="styles/contact.css">
   <link rel="stylesheet" href="styles/page-sections.css">
 </head>
 <body>
-  <!-- Menú de navegación vertical (pantallas verticales) - Solo dropdown de idiomas -->
-  <nav id="main-menu">
+  <div id="waves-effect"></div>
+  <nav id="vertical-nav">
     <div class="vertical-language-dropdown">
       <button class="vertical-language-dropdown-toggle" onclick="toggleVerticalLanguageDropdown()">
         <img id="vertical-selected-flag" src="images/nav/cat_flag.webp" alt="Selected Language">
@@ -41,12 +41,10 @@
       </div>
     </div>
   </nav>
-
-  <!-- Barra de navegación horizontal (pantallas horizontales) -->
   <nav id="horizontal-nav">
     <div class="horizontal-nav-content">
       <div class="horizontal-nav-links">
-        <a href="#stats" class="horizontal-nav-link" data-i18n="nav-about">Sobre Nosaltres</a>
+        <a href="#about" class="horizontal-nav-link" data-i18n="nav-about">Sobre Nosaltres</a>
         <a href="#tickets" class="horizontal-nav-link" data-i18n="nav-tickets">Entrades</a>
         <a href="#gallery" class="horizontal-nav-link" data-i18n="nav-gallery">Galeria</a>
         <a href="#contact" class="horizontal-nav-link" data-i18n="nav-contact">Contacte</a>
@@ -129,121 +127,127 @@
         </text>
       </svg>
     </section>
-    <section class="solutions">
+    <section class="typing-section">
       <div class="typing-general">
         <p><span data-i18n="hero-subtitle">Tú decideixes el pla, nosaltres posem</span> <span class="typing-wrapper"><span class="typing">ritme</span></span></p>
       </div>
     </section>
     
-    <section class="stats-section" id="stats">
-      <div class="number-part">
-        <div class="stat-item">
-          <div class="icon-number">
-            <img src="images/icons/calendar-icon.webp" alt="Calendar icon" class="stat-icon">
-            <div class="separator-icon-number"></div>
-            <p class="stat-number" data-target="150">0</p>
-          </div>
-            <p class="stat-label"><span class="first-word" data-i18n="events-color">eventos</span> <span data-i18n="events-subtitle">creados.</span></p>
-        </div>
-        <div class="stat-separator"></div>
-        <div class="stat-item">
-          <div class="icon-number">
-            <img src="images/icons/person-icon.webp" alt="Calendar icon" class="stat-icon">
-            <div class="separator-icon-number"></div>
-            <p class="stat-number" data-target="12000">0</p>
-          </div>
-            <p class="stat-label"><span class="first-word" data-i18n="attendees-color">asistentes</span> <span data-i18n="attendees-subtitle">totales.</span></p>
-        </div>
-        <div class="stat-separator"></div>
-        <div class="stat-item">
-          <div class="icon-number">
-            <img src="images/icons/clock-icon.webp" alt="Clock icon" class="stat-icon">
-            <div class="separator-icon-number"></div>
-            <p class="stat-number" data-target="4">0</p>
-          </div>
-          <p class="stat-label"><span class="first-word" data-i18n="years-color">años</span> <span data-i18n="years-subtitle">de experiencia.</span></p>
-        </div>
+    <section class="about-section" id="about">
+      <div class="proposal-part">
+        <h2 class="proposal-title" data-i18n="proposal-title">Proposta</h2>
+        <p class="proposal-description" data-i18n="proposal-description">Aquí pots afegir la teva proposta.</p>
       </div>
-      <div class="opinions-part">
+      <div class="numbers-opinions-container" id="stats">
+        <div class="number-part">
+          <div class="stat-item">
+            <div class="icon-number">
+              <img src="images/icons/calendar-icon.webp" alt="Calendar icon" class="stat-icon">
+              <div class="separator-icon-number"></div>
+              <p class="stat-number" data-target="150">0</p>
+            </div>
+              <p class="stat-label"><span class="first-word" data-i18n="events-color">eventos</span> <span data-i18n="events-subtitle">creados.</span></p>
+          </div>
+          <div class="stat-separator"></div>
+          <div class="stat-item">
+            <div class="icon-number">
+              <img src="images/icons/person-icon.webp" alt="Calendar icon" class="stat-icon">
+              <div class="separator-icon-number"></div>
+              <p class="stat-number" data-target="12000">0</p>
+            </div>
+              <p class="stat-label"><span class="first-word" data-i18n="attendees-color">asistentes</span> <span data-i18n="attendees-subtitle">totales.</span></p>
+          </div>
+          <div class="stat-separator"></div>
+          <div class="stat-item">
+            <div class="icon-number">
+              <img src="images/icons/clock-icon.webp" alt="Clock icon" class="stat-icon">
+              <div class="separator-icon-number"></div>
+              <p class="stat-number" data-target="4">0</p>
+            </div>
+            <p class="stat-label"><span class="first-word" data-i18n="years-color">años</span> <span data-i18n="years-subtitle">de experiencia.</span></p>
+          </div>
+        </div>
+        <div class="opinions-part">
 
-        <div class="opinion-card">
-          <div class="person-column">
-            <img src="images/opinions/person-1.webp" alt="Foto de cliente 1" class="client-photo">
-          </div>
-          <div class="opinion-column">
-            <div class="opinion-stars">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+          <div class="opinion-card">
+            <div class="person-column">
+              <img src="images/opinions/person-1.webp" alt="Foto de cliente 1" class="client-photo">
             </div>
-            <p class="client-name">Rubén Doblas</p>
-            <p class="client-opinion" data-i18n="client-opinion-1">Opinion sincera</p>
-          </div>
-        </div>
-         <div class="opinion-card">
-          <div class="person-column">
-            <img src="images/opinions/person-2.webp" alt="Foto de cliente 2" class="client-photo">
-          </div>
-          <div class="opinion-column">
-            <div class="opinion-stars">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+            <div class="opinion-column">
+              <div class="opinion-stars">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+              </div>
+              <p class="client-name">Rubén Doblas</p>
+              <p class="client-opinion" data-i18n="client-opinion-1">Opinion sincera</p>
             </div>
-            <p class="client-name">Guillermo Díaz</p>
-            <p class="client-opinion" data-i18n="client-opinion-2">Opinion sincera</p>
           </div>
-        </div>
-         <div class="opinion-card">
-          <div class="person-column">
-            <img src="images/opinions/person-3.webp" alt="Foto de cliente satisfecho" class="client-photo">
-          </div>
-          <div class="opinion-column">
-            <div class="opinion-stars">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+          <div class="opinion-card">
+            <div class="person-column">
+              <img src="images/opinions/person-2.webp" alt="Foto de cliente 2" class="client-photo">
             </div>
-            <p class="client-name">Samuel de Luque</p>
-            <p class="client-opinion" data-i18n="client-opinion-3">Opinion sincera</p>
-          </div>
-        </div>
-         <div class="opinion-card">
-          <div class="person-column">
-            <img src="images/opinions/person-4.webp" alt="Foto de cliente satisfecho" class="client-photo">
-          </div>
-          <div class="opinion-column">
-            <div class="opinion-stars">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+            <div class="opinion-column">
+              <div class="opinion-stars">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+              </div>
+              <p class="client-name">Guillermo Díaz</p>
+              <p class="client-opinion" data-i18n="client-opinion-2">Opinion sincera</p>
             </div>
-            <p class="client-name">David Cánovas</p>
-            <p class="client-opinion" data-i18n="client-opinion-4">Opinion sincera</p>
           </div>
-        </div>
-        <div class="opinion-card">
-          <div class="person-column">
-            <img src="images/opinions/person-5.webp" alt="Foto de cliente satisfecho" class="client-photo">
-          </div>
-          <div class="opinion-column">
-            <div class="opinion-stars">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
-              <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+          <div class="opinion-card">
+            <div class="person-column">
+              <img src="images/opinions/person-3.webp" alt="Foto de cliente satisfecho" class="client-photo">
             </div>
-            <p class="client-name">Ibai Llanos</p>
-            <p class="client-opinion" data-i18n="client-opinion-5">Opinion sincera</p>
+            <div class="opinion-column">
+              <div class="opinion-stars">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+              </div>
+              <p class="client-name">Samuel de Luque</p>
+              <p class="client-opinion" data-i18n="client-opinion-3">Opinion sincera</p>
+            </div>
+          </div>
+          <div class="opinion-card">
+            <div class="person-column">
+              <img src="images/opinions/person-4.webp" alt="Foto de cliente satisfecho" class="client-photo">
+            </div>
+            <div class="opinion-column">
+              <div class="opinion-stars">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+              </div>
+              <p class="client-name">David Cánovas</p>
+              <p class="client-opinion" data-i18n="client-opinion-4">Opinion sincera</p>
+            </div>
+          </div>
+          <div class="opinion-card">
+            <div class="person-column">
+              <img src="images/opinions/person-5.webp" alt="Foto de cliente satisfecho" class="client-photo">
+            </div>
+            <div class="opinion-column">
+              <div class="opinion-stars">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+                <img src="images/opinions/star.webp" alt="Estrella llena" class="star-icon">
+              </div>
+              <p class="client-name">Ibai Llanos</p>
+              <p class="client-opinion" data-i18n="client-opinion-5">Opinion sincera</p>
+            </div>
           </div>
         </div>
       </div>
@@ -321,7 +325,6 @@
       </div>
     </section>
 </body>
-<script src="scripts/vhs-effect.js"></script>
 <script src="scripts/stars-background.js"></script>
 <script src="scripts/sparkle-effect.js"></script>
 <script src="scripts/language.js"></script>

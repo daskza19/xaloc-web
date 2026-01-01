@@ -221,13 +221,13 @@ function changeLanguage(lang, evt) {
 
 // Toggle del menú
 function toggleMenu() {
-    const menu = document.getElementById('main-menu');
+    const menu = document.getElementById('vertical-nav');
     menu.classList.toggle('open');
 }
 
 // Cerrar el menú
 function closeMenu() {
-    const menu = document.getElementById('main-menu');
+    const menu = document.getElementById('vertical-nav');
     menu.classList.remove('open');
 }
 
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Cerrar menú al hacer click fuera
     document.addEventListener('click', (e) => {
-        const menu = document.getElementById('main-menu');
+        const menu = document.getElementById('vertical-nav');
         const button = document.getElementById('menu-button');
         if (menu && button) {
             if (!menu.contains(e.target) && !button.contains(e.target)) {

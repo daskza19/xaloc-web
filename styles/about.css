@@ -1,18 +1,21 @@
-:root {
-    --primary-color: rgb(203, 178, 121);
-    --primary-color-hover: rgb(213, 188, 131);
-    --contact-bg-color: rgb(203, 178, 121);
-    --secondary-color: rgb(109, 95, 65);
-    --secondary-color-hover: rgb(119, 105, 75);
-    --primary-blur-color: rgba(203, 178, 121, 0.45);
-    --toast-success-color: rgba(55, 105, 55, 0.45);
-    --toast-fail-color: rgba(124, 62, 62, 0.45);
-    --border-radius-low: 0.5vh;
-    --white-text-color: rgb(232, 222, 197);
+.about-section{
+    height: auto;
+    width: 100vw;
+    position: relative;
+    display: block;
 }
 
-.stats-section{
-    min-height: 100vh; /* Solo 100vh - sin scroll extendido */
+.proposal-part{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.numbers-opinions-container{
+    min-height: 100vh;
     width: 100%;
     position: relative;
     display: flex;
@@ -157,8 +160,113 @@ p.stat-label .first-word {
     font-family: unset;
 }
 
+
+.opinion-carousel-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.opinion-card {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    opacity: 0;
+    transform: scale(0.8) translateY(100px);
+    transition: all 0.5s ease;
+    z-index: 1;
+    background-color: #513D34;
+    width: 60vh;
+    max-width: 45vw;
+    height: 30vh;
+    padding: 0.15rem;
+}
+
+.opinion-card::before,
+.opinion-card::after {
+    content: '';
+    position: absolute;
+    width: var(--border-inverse);
+    height: var(--border-inverse);
+    background-color: transparent;
+}
+
+.opinion-card::before {
+    top: 0;
+    left: 0;
+    border-radius: 0 0 var(--border-inverse) 0;
+    box-shadow: var(--border-inverse) var(--border-inverse) 0 0 #513D34;
+}
+
+.opinion-card::after {
+    top: 0;
+    right: 0;
+    border-radius: 0 0 0 var(--border-inverse);
+    box-shadow: calc(-1 * var(--border-inverse)) var(--border-inverse) 0 0 #513D34;
+}
+
+.opinion-card {
+    overflow: visible;
+}
+
+.opinion-card {
+    background: 
+        radial-gradient(circle at top left, transparent var(--border-inverse), #513D34 var(--border-inverse)),
+        radial-gradient(circle at top right, transparent var(--border-inverse), #513D34 var(--border-inverse)),
+        radial-gradient(circle at bottom left, transparent var(--border-inverse), #513D34 var(--border-inverse)),
+        radial-gradient(circle at bottom right, transparent var(--border-inverse), #513D34 var(--border-inverse));
+    background-size: 51% 51%;
+    background-position: top left, top right, bottom left, bottom right;
+    background-repeat: no-repeat;
+}
+
+.opinion-card.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    z-index: 10;
+}
+
+.opinion-card.prev,
+.opinion-card.next {
+    opacity: 0.5;
+    transform: scale(0.85) translateY(0);
+    z-index: 5;
+}
+
+.opinion-card.prev {
+    transform: scale(0.85) translateY(-50px);
+}
+
+.opinion-card.next {
+    transform: scale(0.85) translateY(50px);
+}
+
 @media (max-aspect-ratio: 1/1) {
-    .stats-section {
+    :root {
+        --border-inverse: 2vh;
+    }
+    .opinion-card{
+        width: 80vw;
+        max-width: none;
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+    }
+    
+    .opinion-card.prev {
+        transform: scale(0.90) translateY(-6vh);
+    }
+
+    .opinion-card.next {
+        transform: scale(0.90) translateY(6vh);
+    }
+
+    .about-section {
         min-height: auto
     }
     .number-part {

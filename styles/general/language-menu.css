@@ -1,5 +1,5 @@
 /* Menú vertical - Solo dropdown de idiomas */
-#main-menu {
+#vertical-nav {
     position: fixed;
     top: 2vh;
     right: 2vh;
@@ -102,7 +102,7 @@
 
 /* Ocultar menú vertical en pantallas horizontales */
 @media (min-aspect-ratio: 1/1) {
-    #main-menu {
+    #vertical-nav {
         display: none;
     }
 }
@@ -130,10 +130,6 @@
 #horizontal-nav.sticky {
     top: 1.5rem;
     transform: translate(-50%, 0);
-}
-
-:root {
-    --border-inverse: 1.2rem;
 }
 
 #horizontal-nav::before {
@@ -216,19 +212,20 @@
     transform: rotate(180deg);
 }
 
+/* --- HORIZONTAL LANGUAGE DROPDOWN BLUR EFFECT --- */
 .language-dropdown-menu {
     position: absolute;
-    top: calc(100% + 0.5rem);
+    top: calc(100% + 1rem);
     right: 0;
-    background-color: rgb(203, 178, 121);
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: var(--primary-blur-color, rgba(203, 178, 121, 0.85));
+    backdrop-filter: blur(1vh) grayscale(40%) brightness(70%);
+    border-radius: var(--border-radius-low);
     display: none;
     flex-direction: column;
     overflow: hidden;
-    min-width: 150px;
     z-index: 1000;
+    padding: 0.5vh 0.5vh;
+    transition: background 0.3s, box-shadow 0.3s;
 }
 
 .language-dropdown-menu.open {
@@ -236,31 +233,34 @@
 }
 
 .language-dropdown-item {
-    background-color: transparent;
+    background: transparent;
     border: none;
-    padding: 0.8rem 1rem;
+    padding: 1vh 1.5vh;
     display: flex;
     align-items: center;
     gap: 0.8rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background 0.2s, color 0.2s;
     text-align: left;
     width: 100%;
+    border-radius: var(--border-radius-low);
 }
 
 .language-dropdown-item:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background: var(--primary-color, #cbb279);
+    color: var(--white-text-color, #fff);
 }
 
 .language-dropdown-item img {
     width: 25px;
     height: 25px;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: var(--border-radius-low);
 }
 
 .language-dropdown-item span {
-    color: rgba(0, 0, 0, 0.85);
+    color: var(--white-text-color);
+    font-family: "Google Sans", sans-serif;
     font-weight: 600;
     font-size: 0.95rem;
 }

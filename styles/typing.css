@@ -1,8 +1,4 @@
-:root {
-    --primary-color: rgb(203, 178, 121);
-}
-
-.solutions{
+.typing-section{
     height: 100vh;
     width: 100%;
     position: relative;
