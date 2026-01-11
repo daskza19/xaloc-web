@@ -363,7 +363,11 @@ function createPhotoViewerHTML() {
                             <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
-                    <img src="" alt="" class="photo-viewer-image" id="viewer-image">
+                    <div class="photo-carousel" id="photo-carousel">
+                        <div class="photo-carousel-track" id="photo-carousel-track">
+                            <!-- Images will be loaded here dynamically -->
+                        </div>
+                    </div>
                     <button class="photo-nav-btn photo-nav-next" id="photo-next-btn" aria-label="Siguiente foto">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -577,14 +581,15 @@ function renderPhotos(photos) {
 // ============ PHOTO VIEWER FUNCTIONS ============
 function openPhotoViewer(index) {
     galleryState.currentPhotoIndex = index;
-    const photo = galleryState.currentPhotos[index];
     
     const viewerOverlay = document.getElementById('photo-viewer-overlay');
-    const viewerImage = document.getElementById('viewer-image');
     const viewerTitle = document.getElementById('viewer-title');
     
-    viewerImage.src = photo.fullSize;
-    viewerImage.alt = photo.name;
+    // Inicializar el carrusel
+    initCarousel();
+    
+    // Actualizar título
+    const photo = galleryState.currentPhotos[index];
     viewerTitle.textContent = photo.name;
     
     viewerOverlay.classList.add('active');
@@ -592,34 +597,123 @@ function openPhotoViewer(index) {
     updateNavigationButtons();
 }
 
+function initCarousel() {
+    const track = document.getElementById('photo-carousel-track');
+    const photos = galleryState.currentPhotos;
+    
+    // Crear todos los slides
+    track.innerHTML = photos.map((photo, index) => `
+        <div class="carousel-slide" data-index="${index}">
+            <img 
+                class="carousel-image" 
+                data-src="${photo.fullSize}" 
+                alt="${photo.name}"
+                draggable="false"
+            >
+            <div class="carousel-loader">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    `).join('');
+    
+    // Posicionar en la foto actual
+    updateCarouselPosition(false);
+    
+    // Cargar imágenes cercanas (lazy loading)
+    loadNearbyImages();
+}
+
+function updateCarouselPosition(animate = true) {
+    const track = document.getElementById('photo-carousel-track');
+    const offset = -galleryState.currentPhotoIndex * 100;
+    
+    if (animate) {
+        track.style.transition = 'transform 0.3s ease-out';
+    } else {
+        track.style.transition = 'none';
+    }
+    
+    track.style.transform = `translateX(${offset}%)`;
+    
+    // Actualizar título
+    const viewerTitle = document.getElementById('viewer-title');
+    const photo = galleryState.currentPhotos[galleryState.currentPhotoIndex];
+    if (photo && viewerTitle) {
+        viewerTitle.textContent = photo.name;
+    }
+}
+
+function loadNearbyImages() {
+    const currentIndex = galleryState.currentPhotoIndex;
+    const photos = galleryState.currentPhotos;
+    
+    // Cargar imagen actual y las 2 adyacentes (anterior y siguiente)
+    const indicesToLoad = [
+        currentIndex - 1,
+        currentIndex,
+        currentIndex + 1
+    ].filter(i => i >= 0 && i < photos.length);
+    
+    indicesToLoad.forEach(index => {
+        const slide = document.querySelector(`.carousel-slide[data-index="${index}"]`);
+        if (!slide) return;
+        
+        const img = slide.querySelector('.carousel-image');
+        const loader = slide.querySelector('.carousel-loader');
+        
+        // Si ya tiene src, ya está cargada
+        if (img.src) return;
+        
+        const src = img.dataset.src;
+        if (!src) return;
+        
+        // Crear imagen temporal para precargar
+        const tempImg = new Image();
+        tempImg.onload = () => {
+            img.src = src;
+            img.classList.add('loaded');
+            if (loader) loader.style.display = 'none';
+        };
+        tempImg.onerror = () => {
+            if (loader) loader.innerHTML = '<span style="color: var(--primary-color);">Error</span>';
+        };
+        tempImg.src = src;
+    });
+}
+
 function closePhotoViewer() {
     const viewerOverlay = document.getElementById('photo-viewer-overlay');
     viewerOverlay.classList.remove('active');
+    
+    // Limpiar el carrusel
+    const track = document.getElementById('photo-carousel-track');
+    if (track) {
+        track.innerHTML = '';
+        track.style.transform = '';
+    }
 }
 
 function showPreviousPhoto() {
     if (galleryState.currentPhotoIndex > 0) {
         galleryState.currentPhotoIndex--;
-        updatePhotoViewer();
+        updateCarouselPosition(true);
+        loadNearbyImages();
+        updateNavigationButtons();
     }
 }
 
 function showNextPhoto() {
     if (galleryState.currentPhotoIndex < galleryState.currentPhotos.length - 1) {
         galleryState.currentPhotoIndex++;
-        updatePhotoViewer();
+        updateCarouselPosition(true);
+        loadNearbyImages();
+        updateNavigationButtons();
     }
 }
 
 function updatePhotoViewer() {
-    const photo = galleryState.currentPhotos[galleryState.currentPhotoIndex];
-    const viewerImage = document.getElementById('viewer-image');
-    const viewerTitle = document.getElementById('viewer-title');
-    
-    viewerImage.src = photo.fullSize;
-    viewerImage.alt = photo.name;
-    viewerTitle.textContent = photo.name;
-    
+    updateCarouselPosition(true);
+    loadNearbyImages();
     updateNavigationButtons();
 }
 
@@ -693,26 +787,20 @@ function showAllFolders() {
 
 // ============ SWIPE/TOUCH NAVIGATION ============
 function attachSwipeListeners() {
-    const viewerContent = document.querySelector('.photo-viewer-content');
-    const viewerImage = document.getElementById('viewer-image');
+    const carousel = document.getElementById('photo-carousel');
     
-    if (!viewerContent) return;
-    
-    // Prevenir el comportamiento por defecto del drag en la imagen
-    if (viewerImage) {
-        viewerImage.addEventListener('dragstart', (e) => e.preventDefault());
-    }
+    if (!carousel) return;
     
     // Touch events
-    viewerContent.addEventListener('touchstart', handleTouchStart, { passive: true });
-    viewerContent.addEventListener('touchmove', handleTouchMove, { passive: false });
-    viewerContent.addEventListener('touchend', handleTouchEnd, { passive: true });
+    carousel.addEventListener('touchstart', handleTouchStart, { passive: true });
+    carousel.addEventListener('touchmove', handleTouchMove, { passive: false });
+    carousel.addEventListener('touchend', handleTouchEnd, { passive: true });
     
     // Mouse events para desktop (drag)
-    viewerContent.addEventListener('mousedown', handleMouseDown);
-    viewerContent.addEventListener('mousemove', handleMouseMove);
-    viewerContent.addEventListener('mouseup', handleMouseUp);
-    viewerContent.addEventListener('mouseleave', handleMouseUp);
+    carousel.addEventListener('mousedown', handleMouseDown);
+    carousel.addEventListener('mousemove', handleMouseMove);
+    carousel.addEventListener('mouseup', handleMouseUp);
+    carousel.addEventListener('mouseleave', handleMouseUp);
 }
 
 function handleTouchStart(e) {
@@ -721,7 +809,14 @@ function handleTouchStart(e) {
     
     galleryState.touchStartX = e.touches[0].clientX;
     galleryState.touchStartY = e.touches[0].clientY;
+    galleryState.touchEndX = e.touches[0].clientX;
     galleryState.isSwiping = true;
+    
+    // Desactivar transición durante el drag
+    const track = document.getElementById('photo-carousel-track');
+    if (track) {
+        track.style.transition = 'none';
+    }
 }
 
 function handleTouchMove(e) {
@@ -733,19 +828,33 @@ function handleTouchMove(e) {
     galleryState.touchEndX = e.touches[0].clientX;
     galleryState.touchEndY = e.touches[0].clientY;
     
-    // Calcular la diferencia horizontal
     const diffX = galleryState.touchStartX - galleryState.touchEndX;
     const diffY = Math.abs(galleryState.touchStartY - galleryState.touchEndY);
     
-    // Si el movimiento es más horizontal que vertical, prevenir scroll
+    // Si el movimiento es más horizontal que vertical, prevenir scroll y mover carrusel
     if (Math.abs(diffX) > diffY) {
         e.preventDefault();
         
-        // Añadir feedback visual (mover ligeramente la imagen)
-        const viewerImage = document.getElementById('viewer-image');
-        if (viewerImage) {
-            const translateX = -diffX * 0.3; // Movimiento suave
-            viewerImage.style.transform = `translateX(${translateX}px)`;
+        const track = document.getElementById('photo-carousel-track');
+        const carousel = document.getElementById('photo-carousel');
+        if (track && carousel) {
+            const carouselWidth = carousel.offsetWidth;
+            const baseOffset = -galleryState.currentPhotoIndex * 100;
+            const dragOffset = (-diffX / carouselWidth) * 100;
+            
+            // Limitar el drag en los extremos
+            let newOffset = baseOffset + dragOffset;
+            const maxOffset = 0;
+            const minOffset = -(galleryState.currentPhotos.length - 1) * 100;
+            
+            // Añadir resistencia en los extremos
+            if (newOffset > maxOffset) {
+                newOffset = maxOffset + (newOffset - maxOffset) * 0.3;
+            } else if (newOffset < minOffset) {
+                newOffset = minOffset + (newOffset - minOffset) * 0.3;
+            }
+            
+            track.style.transform = `translateX(${newOffset}%)`;
         }
     }
 }
@@ -759,26 +868,24 @@ function handleTouchEnd(e) {
         return;
     }
     
-    const viewerImage = document.getElementById('viewer-image');
-    
-    // Resetear la transformación
-    if (viewerImage) {
-        viewerImage.style.transform = '';
-    }
-    
     const diffX = galleryState.touchStartX - galleryState.touchEndX;
     const diffY = Math.abs(galleryState.touchStartY - galleryState.touchEndY);
     
-    // Solo procesar si el swipe fue más horizontal que vertical
+    // Determinar si cambiar de foto basándose en el umbral
     if (Math.abs(diffX) > diffY && Math.abs(diffX) > galleryState.swipeThreshold) {
-        if (diffX > 0) {
+        if (diffX > 0 && galleryState.currentPhotoIndex < galleryState.currentPhotos.length - 1) {
             // Swipe izquierda -> siguiente foto
-            showNextPhoto();
-        } else {
+            galleryState.currentPhotoIndex++;
+        } else if (diffX < 0 && galleryState.currentPhotoIndex > 0) {
             // Swipe derecha -> foto anterior
-            showPreviousPhoto();
+            galleryState.currentPhotoIndex--;
         }
     }
+    
+    // Animar a la posición final
+    updateCarouselPosition(true);
+    loadNearbyImages();
+    updateNavigationButtons();
     
     galleryState.isSwiping = false;
     galleryState.touchStartX = 0;
@@ -795,9 +902,18 @@ function handleMouseDown(e) {
     // No iniciar drag si se hace clic en los botones de navegación
     if (e.target.closest('.photo-nav-btn') || e.target.closest('.download-btn')) return;
     
+    e.preventDefault();
+    
     galleryState.touchStartX = e.clientX;
     galleryState.touchStartY = e.clientY;
+    galleryState.touchEndX = e.clientX;
     galleryState.isSwiping = true;
+    
+    // Desactivar transición durante el drag
+    const track = document.getElementById('photo-carousel-track');
+    if (track) {
+        track.style.transition = 'none';
+    }
     
     // Cambiar cursor
     e.currentTarget.style.cursor = 'grabbing';
@@ -814,20 +930,35 @@ function handleMouseMove(e) {
     
     const diffX = galleryState.touchStartX - galleryState.touchEndX;
     
-    // Añadir feedback visual
-    const viewerImage = document.getElementById('viewer-image');
-    if (viewerImage) {
-        const translateX = -diffX * 0.3;
-        viewerImage.style.transform = `translateX(${translateX}px)`;
+    const track = document.getElementById('photo-carousel-track');
+    const carousel = document.getElementById('photo-carousel');
+    if (track && carousel) {
+        const carouselWidth = carousel.offsetWidth;
+        const baseOffset = -galleryState.currentPhotoIndex * 100;
+        const dragOffset = (-diffX / carouselWidth) * 100;
+        
+        // Limitar el drag en los extremos
+        let newOffset = baseOffset + dragOffset;
+        const maxOffset = 0;
+        const minOffset = -(galleryState.currentPhotos.length - 1) * 100;
+        
+        // Añadir resistencia en los extremos
+        if (newOffset > maxOffset) {
+            newOffset = maxOffset + (newOffset - maxOffset) * 0.3;
+        } else if (newOffset < minOffset) {
+            newOffset = minOffset + (newOffset - minOffset) * 0.3;
+        }
+        
+        track.style.transform = `translateX(${newOffset}%)`;
     }
 }
 
 function handleMouseUp(e) {
     if (!galleryState.isSwiping) return;
     
-    const viewerContent = e.currentTarget;
-    if (viewerContent) {
-        viewerContent.style.cursor = '';
+    const carousel = e.currentTarget;
+    if (carousel) {
+        carousel.style.cursor = '';
     }
     
     const viewerOverlay = document.getElementById('photo-viewer-overlay');
@@ -836,22 +967,21 @@ function handleMouseUp(e) {
         return;
     }
     
-    const viewerImage = document.getElementById('viewer-image');
-    
-    // Resetear la transformación con animación
-    if (viewerImage) {
-        viewerImage.style.transform = '';
-    }
-    
     const diffX = galleryState.touchStartX - galleryState.touchEndX;
     
+    // Determinar si cambiar de foto
     if (Math.abs(diffX) > galleryState.swipeThreshold) {
-        if (diffX > 0) {
-            showNextPhoto();
-        } else {
-            showPreviousPhoto();
+        if (diffX > 0 && galleryState.currentPhotoIndex < galleryState.currentPhotos.length - 1) {
+            galleryState.currentPhotoIndex++;
+        } else if (diffX < 0 && galleryState.currentPhotoIndex > 0) {
+            galleryState.currentPhotoIndex--;
         }
     }
+    
+    // Animar a la posición final
+    updateCarouselPosition(true);
+    loadNearbyImages();
+    updateNavigationButtons();
     
     galleryState.isSwiping = false;
     galleryState.touchStartX = 0;
