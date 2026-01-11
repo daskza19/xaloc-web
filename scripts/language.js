@@ -38,7 +38,15 @@ let translations = {
     "message-placeholder": "Escriu el teu missatge",
     "send-contact-button": "ENVIAR",
     "toast-success-message": "Missatge enviat correctament!",
-    "toast-fail-message": "Error en enviar el missatge!"
+    "toast-fail-message": "Error en enviar el missatge!",
+    "gallery-subtitle": "Explora els nostres àlbums de fotos",
+    "gallery-photos": "fotos",
+    "gallery-loading": "Carregant galeria...",
+    "gallery-loading-photos": "Carregant fotos...",
+    "gallery-no-albums": "No hi ha àlbums disponibles",
+    "gallery-no-photos": "No hi ha fotos en aquest àlbum",
+    "gallery-show-more": "Mostrar més",
+    "gallery-download": "Descarregar"
     },
   "es": {
     "nav-about": "Sobre nosotros",
@@ -78,7 +86,15 @@ let translations = {
     "message-placeholder": "Escribe tu mensaje",
     "send-contact-button": "ENVIAR",
     "toast-success-message": "¡Mensaje enviado correctamente!",
-    "toast-fail-message": "Error al enviar el mensaje!"
+    "toast-fail-message": "Error al enviar el mensaje!",
+    "gallery-subtitle": "Explora nuestros álbumes de fotos",
+    "gallery-photos": "fotos",
+    "gallery-loading": "Cargando galería...",
+    "gallery-loading-photos": "Cargando fotos...",
+    "gallery-no-albums": "No hay álbumes disponibles",
+    "gallery-no-photos": "No hay fotos en este álbum",
+    "gallery-show-more": "Mostrar más",
+    "gallery-download": "Descargar"
   },
   "en": {
     "nav-about": "About us",
@@ -118,7 +134,15 @@ let translations = {
     "message-placeholder": "Enter your message",
     "send-contact-button": "SEND",
     "toast-success-message": "Message sent successfully!",
-    "toast-fail-message": "Error sending the message!"
+    "toast-fail-message": "Error sending the message!",
+    "gallery-subtitle": "Explore our photo albums",
+    "gallery-photos": "photos",
+    "gallery-loading": "Loading gallery...",
+    "gallery-loading-photos": "Loading photos...",
+    "gallery-no-albums": "No albums available",
+    "gallery-no-photos": "No photos in this album",
+    "gallery-show-more": "Show more",
+    "gallery-download": "Download"
 }
 };
 let typingWords = [];

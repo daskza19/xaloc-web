@@ -1,0 +1,744 @@
+/* ===== GALLERY SECTION ===== */
+.gallery-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+    padding: 4rem 2rem;
+    position: relative;
+}
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.gallery-title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    text-transform: uppercase;
+}
+
+.gallery-subtitle {
+    font-size: 1.2rem;
+    color: rgba(203, 178, 121, 0.7);
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+}
+
+/* ===== FOLDERS CAROUSEL ===== */
+.folders-carousel {
+    width: 100%;
+    max-width: 1400px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(50vh, 300px), 1fr));
+    justify-items: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.folder-card {
+    width: 50vh;
+    max-width: 400px;
+    height: 30vh;
+    min-height: 200px;
+    background: linear-gradient(145deg, rgba(203, 178, 121, 0.15), rgba(109, 95, 65, 0.1));
+    border: 2px solid var(--primary-color);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/* Hidden folders (for "show more" functionality) */
+.folder-card.hidden-folder {
+    display: none;
+}
+
+.folder-card.hidden-folder.show-all {
+    display: flex;
+}
+
+/* Last visible folder with fade effect */
+.folder-card.fade-folder {
+    position: relative;
+}
+
+.folder-card.fade-folder::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.95) 100%);
+    border-radius: 14px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.folder-card.fade-folder.show-all::after {
+    display: none;
+}
+
+/* Show more button - positioned over the faded card */
+.show-more-container {
+    position: relative;
+    width: 90vw;
+    max-width: 400px;
+    margin-top: -12vh;
+    z-index: 10;
+}
+
+.show-more-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    color: var(--primary-color);
+    font-size: 2vh;
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.show-more-btn:hover {
+    background: var(--primary-color);
+    color: #000;
+}
+
+.show-more-btn.hidden {
+    display: none;
+}
+
+.show-more-container.hidden {
+    display: none;
+}
+
+.folder-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(203, 178, 121, 0.3);
+    border-color: var(--primary-color-hover);
+}
+
+.folder-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(203, 178, 121, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.folder-card:hover::before {
+    opacity: 1;
+}
+
+.folder-icon {
+    width: 120px;
+    height: 100px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    border-radius: 8px;
+}
+
+.folder-icon.has-logo {
+    width: 80%;
+    height: 60%;
+}
+
+.folder-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--primary-color);
+    transition: fill 0.3s ease;
+}
+
+.folder-card:hover .folder-icon svg {
+    fill: var(--primary-color-hover);
+}
+
+.folder-preview {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    opacity: 0.8;
+}
+
+.folder-name {
+    font-size: 2vh;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-align: center;
+    padding: 0 1rem;
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.folder-count {
+    font-size: 1.5vh;
+    color: rgba(203, 178, 121, 0.6);
+    margin-top: 0.5vh;
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.folder-count.no-logo {
+    margin-bottom: 1.5vh;
+}
+
+/* ===== ALBUM PANEL (Overlay) ===== */
+.album-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.album-panel-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.album-panel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.album-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh;
+    padding-bottom: 1vh;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.album-title {
+    font-size: 2.5vh;
+    margin: 0;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    text-transform: uppercase;
+}
+
+.album-close-btn {
+    width: 3vh;
+    height: 3vh;
+    margin-left: 1vh;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.album-close-btn:hover {
+    background: var(--primary-color);
+}
+
+.album-close-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--primary-color);
+    transition: stroke 0.3s ease;
+}
+
+.album-close-btn:hover svg {
+    stroke: #000;
+}
+
+/* ===== PHOTO GRID ===== */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.photo-item {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.photo-item:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.02);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.photo-item:hover img {
+    transform: scale(1.1);
+}
+
+.photo-item-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo-item:hover .photo-item-overlay {
+    opacity: 1;
+}
+
+.photo-item-name {
+    color: var(--white-text-color);
+    font-size: 0.9rem;
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===== PHOTO VIEWER (Lightbox) ===== */
+.photo-viewer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 2000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo-viewer-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.photo-viewer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.photo-viewer-title {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    flex: 1;
+    text-align: center;
+}
+
+.photo-viewer-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Botón cerrar del visor - mismas medidas que album-close-btn */
+.viewer-btn.viewer-close-btn {
+    width: 3vh;
+    height: 3vh;
+    margin-left: 1vh;
+}
+
+.viewer-btn {
+    width: 45px;
+    height: 45px;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.viewer-btn:hover {
+    background: var(--primary-color);
+}
+
+.viewer-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primary-color);
+    fill: none;
+    transition: stroke 0.3s ease;
+}
+
+.viewer-btn:hover svg {
+    stroke: #000;
+}
+
+/* Botón de descarga - centrado abajo */
+.photo-viewer-download {
+    position: fixed;
+    bottom: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.download-btn {
+    width: auto;
+    height: auto;
+    padding: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.download-btn:hover {
+    background: var(--primary-color);
+}
+
+.download-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--primary-color);
+    fill: none;
+    transition: stroke 0.3s ease;
+}
+
+.download-btn:hover svg {
+    stroke: #000;
+}
+
+.download-btn span {
+    color: var(--primary-color);
+    font-family: "Google Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.download-btn:hover span {
+    color: #000;
+}
+
+.photo-viewer-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 2rem;
+}
+
+.photo-viewer-image {
+    max-width: 90%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.photo-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(203, 178, 121, 0.2);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.photo-nav-btn:hover {
+    background: var(--primary-color);
+}
+
+.photo-nav-btn svg {
+    width: 30px;
+    height: 30px;
+    stroke: var(--primary-color);
+    fill: none;
+    transition: stroke 0.3s ease;
+}
+
+.photo-nav-btn:hover svg {
+    stroke: #000;
+}
+
+.photo-nav-prev {
+    left: 2rem;
+}
+
+.photo-nav-next {
+    right: 2rem;
+}
+
+/* ===== LOADING STATE ===== */
+.gallery-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(203, 178, 121, 0.2);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    margin-top: 1rem;
+    color: var(--primary-color);
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 1.1rem;
+}
+
+/* ===== ERROR STATE ===== */
+.gallery-error {
+    text-align: center;
+    padding: 4rem;
+}
+
+.gallery-error-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+}
+
+.gallery-error-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--primary-color);
+}
+
+.gallery-error-text {
+    color: rgba(203, 178, 121, 0.7);
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 1.2rem;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Vertical/Square screens (aspect ratio <= 1) */
+@media (max-aspect-ratio: 1/1) {
+    .folders-carousel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2vh;
+        padding: 1rem;
+    }
+    
+    .folder-card {
+        width: 90vw;
+        max-width: none;
+        height: 20vh;
+        min-height: 180px;
+    }
+    
+    .folder-icon {
+        width: 80%;
+        height: 70%;
+    }
+    
+    .folder-count {
+        font-size: 1.4vh;
+    }
+    
+    .show-more-container {
+        width: 50vw;
+        max-width: none;
+        margin-top: -10vh;
+    }
+    
+    .show-more-btn {
+        width: 100%;
+    }
+}
+
+/* Horizontal screens */
+@media (min-aspect-ratio: 1/1) {
+    .folders-carousel {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(50vh, 350px), 1fr));
+        justify-items: center;
+    }
+    
+    .folder-card {
+        width: 50vh;
+        max-width: 400px;
+        height: 30vh;
+        min-height: 220px;
+    }
+    
+    /* En horizontal, no mostrar el efecto fade ni el botón */
+    .folder-card.fade-folder::after {
+        display: none;
+    }
+    
+    .folder-card.hidden-folder {
+        display: flex;
+    }
+    
+    .show-more-container {
+        display: none;
+    }
+}
+
+/* Pantallas verticales (aspect ratio <= 1) - Botones cerrar a la izquierda */
+@media (max-aspect-ratio: 1/1) {
+    .gallery-title {
+        font-size: 2.5rem;
+    }
+    
+    /* Album header: cruz y título a la izquierda */
+    .album-header {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        gap: 1.5vh;
+        padding-top: 1vh;
+    }
+    
+    .album-title {
+        font-size: 3vh;
+    }
+    
+    /* Photo viewer header: botón cerrar a la izquierda */
+    .photo-viewer-header {
+        flex-direction: row;
+    }
+    
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .photo-nav-btn {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .photo-nav-prev {
+        left: 0.5rem;
+    }
+    
+    .photo-nav-next {
+        right: 0.5rem;
+    }
+    
+    .photo-viewer-title {
+        font-size: 1rem;
+    }
+    
+    .viewer-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .gallery-section {
+        padding: 2rem 1rem;
+    }
+    
+    .album-panel {
+        padding: 1.5rem 1rem;
+        padding-top: 2.5rem;
+    }
+    
+    .photo-viewer-header {
+        padding: 0.5rem 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .photo-viewer-actions {
+        gap: 0.5rem;
+    }
+}
