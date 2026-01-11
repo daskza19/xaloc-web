@@ -372,6 +372,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .photo-viewer-header {
@@ -434,7 +435,7 @@
 
 /* Botón de descarga - centrado abajo */
 .photo-viewer-download {
-    position: fixed;
+    position: absolute;
     bottom: 3vh;
     left: 50%;
     transform: translateX(-50%);
@@ -497,14 +498,21 @@
     justify-content: center;
     position: relative;
     padding: 2rem;
+    padding-bottom: 10vh;
+    cursor: grab;
+    touch-action: pan-y pinch-zoom;
+    overflow: hidden;
 }
 
 .photo-viewer-image {
     max-width: 90%;
-    max-height: 80vh;
+    max-height: 70vh;
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transition: transform 0.15s ease-out;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .photo-nav-btn {
@@ -691,9 +699,38 @@
         font-size: 3vh;
     }
     
-    /* Photo viewer header: botón cerrar a la izquierda */
+    /* Photo viewer header: mismo estilo que album header */
     .photo-viewer-header {
         flex-direction: row;
+        justify-content: flex-start;
+        gap: 1.5vh;
+        padding: 1.5vh 2vh;
+        padding-bottom: 1vh;
+        border-bottom: 2px solid var(--primary-color);
+        background: transparent;
+    }
+    
+    .photo-viewer-title {
+        font-size: 3vh;
+        text-align: left;
+        margin: 0;
+        font-weight: bold;
+        text-transform: uppercase;
+        max-width: 45vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .viewer-btn.viewer-close-btn {
+        width: 3vh;
+        height: 3vh;
+        margin-left: 0;
+        flex-shrink: 0;
+    }
+    
+    .photo-viewer-actions {
+        display: none;
     }
     
     .photo-grid {
@@ -714,15 +751,6 @@
         right: 0.5rem;
     }
     
-    .photo-viewer-title {
-        font-size: 1rem;
-    }
-    
-    .viewer-btn {
-        width: 40px;
-        height: 40px;
-    }
-    
     .gallery-section {
         padding: 2rem 1rem;
     }
@@ -732,13 +760,8 @@
         padding-top: 2.5rem;
     }
     
-    .photo-viewer-header {
-        padding: 0.5rem 1rem;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-    
-    .photo-viewer-actions {
-        gap: 0.5rem;
+    .photo-viewer {
+        padding: 1.5rem 1rem;
+        padding-top: 2.5rem;
     }
 }

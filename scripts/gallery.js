@@ -60,7 +60,14 @@ let galleryState = {
     isLoading: false,
     showAllFolders: false,
     maxVisibleFolders: 4, // En vista vertical, mostrar 4 carpetas (la 4ª con fade si hay más)
-    minFoldersForShowMore: 4 // Mostrar botón "mostrar más" si hay 4 o más carpetas
+    minFoldersForShowMore: 4, // Mostrar botón "mostrar más" si hay 4 o más carpetas
+    // Touch/swipe state
+    touchStartX: 0,
+    touchStartY: 0,
+    touchEndX: 0,
+    touchEndY: 0,
+    isSwiping: false,
+    swipeThreshold: 50 // Mínimo de píxeles para considerar un swipe
 };
 
 // ============ INICIALIZACIÓN ============
@@ -106,17 +113,15 @@ async function fetchFolders() {
     
     const data = await response.json();
     
-    // Para cada carpeta, obtener el logo, conteo de fotos y una imagen de preview
+    // Para cada carpeta, obtener TODOS los archivos en UNA SOLA petición
     const foldersWithDetails = await Promise.all(
         data.files.map(async (folder) => {
-            const logo = await fetchFolderLogo(folder.id);
-            const photos = await fetchPhotosFromFolder(folder.id, 1);
-            const photoCount = await getPhotoCount(folder.id);
+            const folderData = await fetchFolderContents(folder.id);
             return {
                 ...folder,
-                photoCount,
-                logo: logo,
-                previewImage: photos[0] || null
+                photoCount: folderData.photoCount,
+                logo: folderData.logo,
+                previewImage: folderData.previewImage
             };
         })
     );
@@ -129,43 +134,47 @@ async function fetchFolders() {
     return foldersWithDetails;
 }
 
-async function fetchFolderLogo(folderId) {
-    // Buscar específicamente el archivo logo.png en la carpeta
-    const query = `'${folderId}' in parents and name='logo.png' and trashed=false`;
-    const fields = 'files(id,name)';
+// Nueva función optimizada: obtiene todo el contenido de una carpeta en UNA petición
+async function fetchFolderContents(folderId) {
+    const mimeQuery = GALLERY_CONFIG.ALLOWED_MIME_TYPES.map(t => `mimeType='${t}'`).join(' or ');
+    const query = `'${folderId}' in parents and (${mimeQuery}) and trashed=false`;
+    const fields = 'files(id,name,mimeType,thumbnailLink)';
     
-    const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=${encodeURIComponent(fields)}&key=${GALLERY_CONFIG.API_KEY}`;
+    const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=${encodeURIComponent(fields)}&key=${GALLERY_CONFIG.API_KEY}&pageSize=100`;
     
     const response = await fetch(url);
     
-    if (!response.ok) return null;
-    
-    const data = await response.json();
-    
-    if (data.files && data.files.length > 0) {
-        return {
-            id: data.files[0].id,
-            thumbnail: getDirectImageUrl(data.files[0].id, 'thumbnail'),
-            fullSize: getDirectImageUrl(data.files[0].id, 'full')
-        };
+    if (!response.ok) {
+        return { photoCount: 0, logo: null, previewImage: null };
     }
     
-    return null;
-}
-
-async function getPhotoCount(folderId) {
-    const mimeQuery = GALLERY_CONFIG.ALLOWED_MIME_TYPES.map(t => `mimeType='${t}'`).join(' or ');
-    // Excluir logo.png del conteo
-    const query = `'${folderId}' in parents and (${mimeQuery}) and name!='logo.png' and trashed=false`;
-    
-    const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&fields=files(id)&key=${GALLERY_CONFIG.API_KEY}`;
-    
-    const response = await fetch(url);
-    
-    if (!response.ok) return 0;
-    
     const data = await response.json();
-    return data.files.length;
+    const files = data.files || [];
+    
+    // Buscar logo.png
+    const logoFile = files.find(f => f.name.toLowerCase() === 'logo.png');
+    const logo = logoFile ? {
+        id: logoFile.id,
+        thumbnail: getDirectImageUrl(logoFile.id, 'thumbnail'),
+        fullSize: getDirectImageUrl(logoFile.id, 'full')
+    } : null;
+    
+    // Filtrar fotos (excluyendo logo.png)
+    const photos = files.filter(f => f.name.toLowerCase() !== 'logo.png');
+    
+    // Primera foto como preview
+    const previewImage = photos.length > 0 ? {
+        id: photos[0].id,
+        name: photos[0].name,
+        thumbnail: photos[0].thumbnailLink || getDirectImageUrl(photos[0].id, 'thumbnail'),
+        fullSize: getDirectImageUrl(photos[0].id, 'full')
+    } : null;
+    
+    return {
+        photoCount: photos.length,
+        logo: logo,
+        previewImage: previewImage
+    };
 }
 
 async function fetchPhotosFromFolder(folderId, limit = GALLERY_CONFIG.MAX_PHOTOS_PER_ALBUM) {
@@ -199,7 +208,8 @@ function getDirectImageUrl(fileId, size = 'full') {
     if (size === 'thumbnail') {
         return `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`;
     }
-    return `https://drive.google.com/uc?export=view&id=${fileId}`;
+    // Para tamaño completo, usar thumbnail con tamaño grande
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w2000`;
 }
 
 // ============ RENDERIZADO ============
@@ -472,6 +482,9 @@ function attachFolderListeners() {
     
     // Keyboard navigation
     document.addEventListener('keydown', handleKeyboardNavigation);
+    
+    // Touch/swipe navigation para el visor de fotos
+    attachSwipeListeners();
 }
 
 function handleKeyboardNavigation(e) {
@@ -621,17 +634,43 @@ function updateNavigationButtons() {
     nextBtn.style.pointerEvents = galleryState.currentPhotoIndex === galleryState.currentPhotos.length - 1 ? 'none' : 'auto';
 }
 
-function downloadCurrentPhoto() {
+async function downloadCurrentPhoto() {
     const photo = galleryState.currentPhotos[galleryState.currentPhotoIndex];
+    const downloadBtn = document.getElementById('viewer-download-btn');
     
-    // Crear un enlace temporal para descargar
-    const link = document.createElement('a');
-    link.href = photo.downloadUrl;
-    link.download = photo.name;
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Cambiar el texto del botón mientras descarga
+    const originalText = downloadBtn.querySelector('span').textContent;
+    downloadBtn.querySelector('span').textContent = 'Descarregant...';
+    downloadBtn.disabled = true;
+    
+    try {
+        // Usar la URL del thumbnail con tamaño máximo para descargar
+        const imageUrl = `https://drive.google.com/thumbnail?id=${photo.id}&sz=w4000`;
+        
+        // Descargar la imagen como blob
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        
+        // Crear URL del blob y descargar
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = photo.name || `foto_${photo.id}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Liberar el blob URL
+        window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+        console.error('Error descargando la imagen:', error);
+        // Fallback: abrir en nueva pestaña
+        window.open(`https://drive.google.com/uc?export=download&id=${photo.id}`, '_blank');
+    } finally {
+        // Restaurar el botón
+        downloadBtn.querySelector('span').textContent = originalText;
+        downloadBtn.disabled = false;
+    }
 }
 
 // ============ SHOW MORE FUNCTIONALITY ============
@@ -650,4 +689,173 @@ function showAllFolders() {
     if (showMoreContainer) {
         showMoreContainer.classList.add('hidden');
     }
+}
+
+// ============ SWIPE/TOUCH NAVIGATION ============
+function attachSwipeListeners() {
+    const viewerContent = document.querySelector('.photo-viewer-content');
+    const viewerImage = document.getElementById('viewer-image');
+    
+    if (!viewerContent) return;
+    
+    // Prevenir el comportamiento por defecto del drag en la imagen
+    if (viewerImage) {
+        viewerImage.addEventListener('dragstart', (e) => e.preventDefault());
+    }
+    
+    // Touch events
+    viewerContent.addEventListener('touchstart', handleTouchStart, { passive: true });
+    viewerContent.addEventListener('touchmove', handleTouchMove, { passive: false });
+    viewerContent.addEventListener('touchend', handleTouchEnd, { passive: true });
+    
+    // Mouse events para desktop (drag)
+    viewerContent.addEventListener('mousedown', handleMouseDown);
+    viewerContent.addEventListener('mousemove', handleMouseMove);
+    viewerContent.addEventListener('mouseup', handleMouseUp);
+    viewerContent.addEventListener('mouseleave', handleMouseUp);
+}
+
+function handleTouchStart(e) {
+    const viewerOverlay = document.getElementById('photo-viewer-overlay');
+    if (!viewerOverlay || !viewerOverlay.classList.contains('active')) return;
+    
+    galleryState.touchStartX = e.touches[0].clientX;
+    galleryState.touchStartY = e.touches[0].clientY;
+    galleryState.isSwiping = true;
+}
+
+function handleTouchMove(e) {
+    if (!galleryState.isSwiping) return;
+    
+    const viewerOverlay = document.getElementById('photo-viewer-overlay');
+    if (!viewerOverlay || !viewerOverlay.classList.contains('active')) return;
+    
+    galleryState.touchEndX = e.touches[0].clientX;
+    galleryState.touchEndY = e.touches[0].clientY;
+    
+    // Calcular la diferencia horizontal
+    const diffX = galleryState.touchStartX - galleryState.touchEndX;
+    const diffY = Math.abs(galleryState.touchStartY - galleryState.touchEndY);
+    
+    // Si el movimiento es más horizontal que vertical, prevenir scroll
+    if (Math.abs(diffX) > diffY) {
+        e.preventDefault();
+        
+        // Añadir feedback visual (mover ligeramente la imagen)
+        const viewerImage = document.getElementById('viewer-image');
+        if (viewerImage) {
+            const translateX = -diffX * 0.3; // Movimiento suave
+            viewerImage.style.transform = `translateX(${translateX}px)`;
+        }
+    }
+}
+
+function handleTouchEnd(e) {
+    if (!galleryState.isSwiping) return;
+    
+    const viewerOverlay = document.getElementById('photo-viewer-overlay');
+    if (!viewerOverlay || !viewerOverlay.classList.contains('active')) {
+        galleryState.isSwiping = false;
+        return;
+    }
+    
+    const viewerImage = document.getElementById('viewer-image');
+    
+    // Resetear la transformación
+    if (viewerImage) {
+        viewerImage.style.transform = '';
+    }
+    
+    const diffX = galleryState.touchStartX - galleryState.touchEndX;
+    const diffY = Math.abs(galleryState.touchStartY - galleryState.touchEndY);
+    
+    // Solo procesar si el swipe fue más horizontal que vertical
+    if (Math.abs(diffX) > diffY && Math.abs(diffX) > galleryState.swipeThreshold) {
+        if (diffX > 0) {
+            // Swipe izquierda -> siguiente foto
+            showNextPhoto();
+        } else {
+            // Swipe derecha -> foto anterior
+            showPreviousPhoto();
+        }
+    }
+    
+    galleryState.isSwiping = false;
+    galleryState.touchStartX = 0;
+    galleryState.touchStartY = 0;
+    galleryState.touchEndX = 0;
+    galleryState.touchEndY = 0;
+}
+
+// Mouse events para desktop
+function handleMouseDown(e) {
+    const viewerOverlay = document.getElementById('photo-viewer-overlay');
+    if (!viewerOverlay || !viewerOverlay.classList.contains('active')) return;
+    
+    // No iniciar drag si se hace clic en los botones de navegación
+    if (e.target.closest('.photo-nav-btn') || e.target.closest('.download-btn')) return;
+    
+    galleryState.touchStartX = e.clientX;
+    galleryState.touchStartY = e.clientY;
+    galleryState.isSwiping = true;
+    
+    // Cambiar cursor
+    e.currentTarget.style.cursor = 'grabbing';
+}
+
+function handleMouseMove(e) {
+    if (!galleryState.isSwiping) return;
+    
+    const viewerOverlay = document.getElementById('photo-viewer-overlay');
+    if (!viewerOverlay || !viewerOverlay.classList.contains('active')) return;
+    
+    galleryState.touchEndX = e.clientX;
+    galleryState.touchEndY = e.clientY;
+    
+    const diffX = galleryState.touchStartX - galleryState.touchEndX;
+    
+    // Añadir feedback visual
+    const viewerImage = document.getElementById('viewer-image');
+    if (viewerImage) {
+        const translateX = -diffX * 0.3;
+        viewerImage.style.transform = `translateX(${translateX}px)`;
+    }
+}
+
+function handleMouseUp(e) {
+    if (!galleryState.isSwiping) return;
+    
+    const viewerContent = e.currentTarget;
+    if (viewerContent) {
+        viewerContent.style.cursor = '';
+    }
+    
+    const viewerOverlay = document.getElementById('photo-viewer-overlay');
+    if (!viewerOverlay || !viewerOverlay.classList.contains('active')) {
+        galleryState.isSwiping = false;
+        return;
+    }
+    
+    const viewerImage = document.getElementById('viewer-image');
+    
+    // Resetear la transformación con animación
+    if (viewerImage) {
+        viewerImage.style.transform = '';
+    }
+    
+    const diffX = galleryState.touchStartX - galleryState.touchEndX;
+    
+    if (Math.abs(diffX) > galleryState.swipeThreshold) {
+        if (diffX > 0) {
+            showNextPhoto();
+        } else {
+            showPreviousPhoto();
+        }
+    }
+    
+    galleryState.isSwiping = false;
+    galleryState.touchStartX = 0;
+    galleryState.touchStartY = 0;
+    galleryState.touchEndX = 0;
+    galleryState.touchEndY = 0;
 }
