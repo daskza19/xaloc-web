@@ -46,7 +46,9 @@ let translations = {
     "gallery-no-albums": "No hi ha àlbums disponibles",
     "gallery-no-photos": "No hi ha fotos en aquest àlbum",
     "gallery-show-more": "Mostrar més",
-    "gallery-download": "Descarregar"
+    "gallery-download": "Descarregar",
+    "proposal-title": "Proposta",
+    "proposal-subtitle": "Creem experiències úniques i màgiques per a tu."
     },
   "es": {
     "nav-about": "Sobre nosotros",
@@ -94,7 +96,9 @@ let translations = {
     "gallery-no-albums": "No hay álbumes disponibles",
     "gallery-no-photos": "No hay fotos en este álbum",
     "gallery-show-more": "Mostrar más",
-    "gallery-download": "Descargar"
+    "gallery-download": "Descargar",
+    "proposal-title": "Propuesta",
+    "proposal-subtitle": "Creamos experiencias únicas y mágicas para ti."
   },
   "en": {
     "nav-about": "About us",
@@ -142,7 +146,9 @@ let translations = {
     "gallery-no-albums": "No albums available",
     "gallery-no-photos": "No photos in this album",
     "gallery-show-more": "Show more",
-    "gallery-download": "Download"
+    "gallery-download": "Download",
+    "proposal-title": "Proposal",
+    "proposal-subtitle": "We create unique and magical experiences for you."
 }
 };
 let typingWords = [];
@@ -211,8 +217,13 @@ function changeLanguage(lang, evt) {
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
         if (translations[lang][key]) {
+            // Si es el proposal-subtitle, dividir en palabras y crear spans
+            if (key === 'proposal-subtitle') {
+                const words = translations[lang][key].split(' ');
+                element.innerHTML = words.map(word => `<span class="scroll-word">${word}</span>`).join('');
+            }
             // Si el elemento es un span dentro de un párrafo con typing, solo actualizar el textContent
-            if (element.tagName === 'SPAN' && element.parentElement.querySelector('.typing')) {
+            else if (element.tagName === 'SPAN' && element.parentElement.querySelector('.typing')) {
                 element.textContent = translations[lang][key];
             } else {
                 element.textContent = translations[lang][key];
@@ -235,6 +246,11 @@ function changeLanguage(lang, evt) {
         if (window.restartTypingEffect) {
             window.restartTypingEffect(typingWords);
         }
+    }
+    
+    // Reiniciar el efecto de scroll de palabras después de actualizar las traducciones
+    if (window.reinitScrollWordEffect) {
+        window.reinitScrollWordEffect();
     }
     
     // Reiniciar el efecto de estrellas después de actualizar las traducciones
