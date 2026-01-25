@@ -1,27 +1,18 @@
 /* ===== GALLERY SECTION ===== */
 .gallery-section {
-    min-height: 100vh;
+    min-height: 50vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: transparent;
     padding: 4rem 2rem;
     position: relative;
+    margin-bottom: 15vh;
+    overflow: hidden;
 }
 
 .gallery-header {
     text-align: center;
-    margin-bottom: 3rem;
-}
-
-.gallery-title {
-    font-size: 4rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-family: "Google Sans", sans-serif;
-    font-optical-sizing: auto;
-    text-transform: uppercase;
 }
 
 .gallery-subtitle {
@@ -38,13 +29,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(50vh, 300px), 1fr));
     justify-items: center;
-    gap: 2rem;
-    padding: 2rem;
+    gap: 2vh;
+    padding: 2vh;
 }
 
 .folder-card {
-    width: 50vh;
-    max-width: 400px;
+    width: -webkit-fill-available;
     height: 30vh;
     min-height: 200px;
     background: linear-gradient(145deg, rgba(203, 178, 121, 0.15), rgba(109, 95, 65, 0.1));
@@ -368,8 +358,8 @@
 }
 
 .photo-viewer {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -481,7 +471,7 @@
 .download-btn span {
     color: var(--primary-color);
     font-family: "Google Sans", sans-serif;
-    font-size: 1rem;
+    font-size: 1.5vh;
     font-weight: bold;
     text-transform: uppercase;
     transition: color 0.3s ease;
@@ -665,7 +655,6 @@
         flex-direction: column;
         align-items: center;
         gap: 2vh;
-        padding: 1rem;
     }
     
     .folder-card {
@@ -704,8 +693,6 @@
     }
     
     .folder-card {
-        width: 50vh;
-        max-width: 400px;
         height: 30vh;
         min-height: 220px;
     }
@@ -726,9 +713,6 @@
 
 /* Pantallas verticales (aspect ratio <= 1) - Botones cerrar a la izquierda */
 @media (max-aspect-ratio: 1/1) {
-    .gallery-title {
-        font-size: 2.5rem;
-    }
     
     /* Album header: cruz y título a la izquierda */
     .album-header {
@@ -807,4 +791,16 @@
         padding: 1.5rem 1rem;
         padding-top: 2.5rem;
     }
+}
+
+.effect-4 {
+    position: absolute;
+    top: -5vh;
+    right: -2vw;
+    height: 90vh;
+    height: auto;
+    opacity: 0.8;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
 }

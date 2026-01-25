@@ -221,8 +221,8 @@ function renderFolders(folders) {
     
     gallerySection.innerHTML = `
         <div class="gallery-header">
-            <h1 class="gallery-title" data-i18n="nav-gallery">Galeria</h1>
-            <p class="gallery-subtitle" data-i18n="gallery-subtitle">Explora els nostres àlbums de fotos</p>
+            <img src="images/effects/effect_04.webp" alt="Effect 4" class="effect-4">
+            <h2 class="gallery-title" data-i18n="nav-gallery">Galeria</h2>
         </div>
         <div class="folders-carousel">
             ${folders.length > 0 ? folders.map((folder, index) => createFolderCard(folder, index, isVertical, folders.length)).join('') : '<p class="gallery-error-text" data-i18n="gallery-no-albums">No hi ha àlbums disponibles</p>'}

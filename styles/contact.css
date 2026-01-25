@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: end;
     align-items: center;
-    overflow: visible;
+    overflow: hidden;
     margin-bottom: 0;
     position: relative;
     background-color: transparent;
@@ -18,7 +18,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    overflow: visible;
+    overflow: hidden;
     margin-bottom: 0;
     background: 
         radial-gradient(circle at top left, transparent var(--border-inverse), var(--contact-bg-color) var(--border-inverse)),
@@ -87,9 +87,18 @@
     align-items: center;
 }
 
-.h2{
-    font-family: "Google Sans", sans-serif;
-    font-size: 2rem;
+h2{
+    font-size: 6vh;
+    font-family: "Tilt Warp", sans-serif;
+    font-style: italic;
+    color: var(--primary-color);
+    margin: 0;
+    margin-bottom: 1vh;
+    align-self: center;
+    text-shadow: black 0 0 3vh;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2vh;
 }
 
 .name-contact-label,
@@ -106,7 +115,7 @@
 .text-contact-input {
     font-family: "Google Sans", sans-serif;
     font-size: 1.8vh;
-    padding: 1.5vh 2vh;
+    padding: 1vh 1.5vh;
     border: 2px solid #000000;
     border-radius: 0.5vh;
     background-color: rgba(255, 255, 255, 0.9);
@@ -230,7 +239,7 @@
 /* Ajuste para pantallas horizontales cuando aparece el nav horizontal */
 @media (min-aspect-ratio: 1/1) {
     .contact-container {
-        height: 70vh;
+        height: 65vh;
     }
     
     .contact-form-wrapper {
@@ -262,6 +271,7 @@
         align-items: center;
         justify-content: center;
         padding: 1.5vh;
+        margin-bottom: 2vh;
     }
     
     .send-button-icon img {
@@ -316,7 +326,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1vh 0;
+    padding: 0vh 0vh 2.5vh 0vh;
     width: 100%;
 }
 
@@ -325,4 +335,24 @@
     font-size: 1.7vh;
     color: rgba(255, 255, 255, 0.7);
     margin: 0;
+}
+
+.last-effect-1 {
+  position: absolute;
+  bottom: -0.5rem;
+  right: -0.5rem;
+  height: 60vh;
+  opacity: 0.6;
+  filter: blur(0.01rem);
+  z-index: 55;
+}
+
+.last-effect-2 {
+  position: absolute;
+  bottom: -0.5rem;
+  left: -0.5rem;
+  height: 60vh;
+  opacity: 0.6;
+  filter: blur(0.01rem);
+  z-index: 55;
 }

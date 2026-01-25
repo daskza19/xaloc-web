@@ -94,7 +94,7 @@ body {
   right: 0;
   bottom: 0;
   pointer-events: none;
-  overflow: visible;
+  overflow: hidden;
   z-index: 1000;
 }
 
@@ -214,13 +214,13 @@ body {
 #text-path1, #text-path2, #text-path3{
   fill: rgb(109, 95, 65);
   font-weight: bold;
-  font-size: 4vh;
+  font-size: 5vh;
 }
 
 #text-path4, #text-path5 {
   fill: rgb(203, 178, 121);
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 5vh;
 }
 
 @media (max-aspect-ratio: 1/1) {
