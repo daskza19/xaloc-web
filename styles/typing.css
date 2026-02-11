@@ -51,6 +51,7 @@ span.typing {
     vertical-align: bottom;
     text-align: left;
     line-height: 1;
+    padding-right: 0.6vh;
 }
 
 @keyframes typing {
