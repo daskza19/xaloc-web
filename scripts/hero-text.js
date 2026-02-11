@@ -15,7 +15,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize offsets for each text path
     const offsets = textPaths.map(path => path.direction === "right" ? -100 : 0);
     
+    let isVisible = true;
+    let animationId = null;
+
+    // Use IntersectionObserver to pause animation when hero is not visible
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+        const observer = new IntersectionObserver((entries) => {
+            isVisible = entries[0].isIntersecting;
+            if (isVisible && !animationId) {
+                animationId = requestAnimationFrame(animateText);
+            }
+        }, { threshold: 0 });
+        observer.observe(heroSection);
+    }
+
     const animateText = () => {
+        if (!isVisible) {
+            animationId = null;
+            return;
+        }
+
         textPaths.forEach((path, index) => {
             if (!path.element) return;
             
@@ -34,8 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
             path.element.setAttribute("startOffset", offsets[index] + "%");
         });
         
-        requestAnimationFrame(animateText);
+        animationId = requestAnimationFrame(animateText);
     };
     
-    animateText();
+    animationId = requestAnimationFrame(animateText);
 });

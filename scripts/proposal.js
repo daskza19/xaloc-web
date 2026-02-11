@@ -60,8 +60,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Update on scroll
-    window.addEventListener('scroll', updateScrollEffects);
+    // Update on scroll with requestAnimationFrame throttle
+    let scrollTicking = false;
+    window.addEventListener('scroll', function() {
+        if (!scrollTicking) {
+            requestAnimationFrame(function() {
+                updateScrollEffects();
+                scrollTicking = false;
+            });
+            scrollTicking = true;
+        }
+    }, { passive: true });
     
     // Initial update
     updateScrollEffects();

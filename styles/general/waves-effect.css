@@ -6,6 +6,7 @@
   height: 100vh;
   z-index: 10;
   pointer-events: none;
+  contain: strict;
 }
 
 #waves-effect::before {
@@ -23,4 +24,12 @@
   );
   background-size: 100% calc(100% / var(--ondas-count));
   opacity: 0.7;
+  will-change: auto;
+}
+
+/* Reduce wave complexity on mobile */
+@media (max-width: 768px) {
+  #waves-effect::before {
+    opacity: 0.5;
+  }
 }

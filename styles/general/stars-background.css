@@ -23,6 +23,8 @@ body {
   opacity: 0;
   animation: starFade var(--duration) ease-in-out infinite;
   animation-delay: var(--delay);
+  will-change: opacity, transform;
+  contain: strict;
 }
 
 @keyframes starFade {

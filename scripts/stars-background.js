@@ -1,8 +1,11 @@
 // Efecto de estrellas en el fondo
 (function() {
+  // Detect mobile for reduced star count
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  
   // Configuración
   const config = {
-    numStars: 50, // Número de estrellas
+    numStars: isMobile ? 20 : 50, // Fewer stars on mobile
     minSize: 0.3, // Tamaño mínimo de estrella (% de altura de ventana)
     maxSize: 2, // Tamaño máximo de estrella (% de altura de ventana)
     minDuration: 2, // Duración mínima de animación (s)
