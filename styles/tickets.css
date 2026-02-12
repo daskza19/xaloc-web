@@ -1,0 +1,9 @@
+img.effect-3{
+    position: absolute;
+    left: -2vw;
+    height: 90vh;
+    opacity: 0.8;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+}

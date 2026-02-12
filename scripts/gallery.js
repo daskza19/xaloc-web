@@ -405,6 +405,7 @@ function showGalleryError(message) {
     gallerySection.innerHTML = `
         <div class="gallery-header">
             <h1 class="gallery-title" data-i18n="nav-gallery">Galeria</h1>
+            <img src="images/effects/effect_04.webp" alt="Effect 4" class="effect-4">
         </div>
         <div class="gallery-error">
             <div class="gallery-error-icon">
