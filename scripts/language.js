@@ -47,6 +47,7 @@ let translations = {
     "gallery-no-photos": "No hi ha fotos en aquest àlbum",
     "gallery-show-more": "Mostrar més",
     "gallery-download": "Descarregar",
+    "gallery-downloading": "Descarregant...",
     "proposal-title": "Proposta",
     "proposal-subtitle": "Creem experiències úniques i màgiques per a tu."
     },
@@ -97,6 +98,7 @@ let translations = {
     "gallery-no-photos": "No hay fotos en este álbum",
     "gallery-show-more": "Mostrar más",
     "gallery-download": "Descargar",
+    "gallery-downloading": "Descargando...",
     "proposal-title": "Propuesta",
     "proposal-subtitle": "Creamos experiencias únicas y mágicas para ti."
   },
@@ -147,6 +149,7 @@ let translations = {
     "gallery-no-photos": "No photos in this album",
     "gallery-show-more": "Show more",
     "gallery-download": "Download",
+    "gallery-downloading": "Downloading...",
     "proposal-title": "Proposal",
     "proposal-subtitle": "We create unique and magical experiences for you."
 }

@@ -692,7 +692,7 @@ function loadNearbyImages() {
         const src = img.dataset.src;
         if (!src) return;
         
-        // Crear imagen temporal para precargar
+        // Usar <img> normal para mostrar (no tiene restricción CORS)
         const tempImg = new Image();
         tempImg.onload = () => {
             img.src = src;
@@ -756,26 +756,25 @@ function updateNavigationButtons() {
 async function downloadCurrentPhoto() {
     const photo = galleryState.currentPhotos[galleryState.currentPhotoIndex];
     const downloadBtn = document.getElementById('viewer-download-btn');
+    const span = downloadBtn.querySelector('span');
     
-    // Buscar la imagen ya cargada en el carrusel del DOM
-    const slide = document.querySelector(`.carousel-slide[data-index="${galleryState.currentPhotoIndex}"]`);
-    const img = slide ? slide.querySelector('.carousel-image') : null;
+    // Usar el sistema de traducción para los textos del botón
+    const downloadingText = (translations && translations[currentLanguage] && translations[currentLanguage]['gallery-downloading']) || 'Descarregant...';
+    const downloadText = (translations && translations[currentLanguage] && translations[currentLanguage]['gallery-download']) || 'Descarregar';
     
-    if (!img || !img.src || !img.classList.contains('loaded')) {
-        console.warn('La imagen aún no está cargada en el visor.');
-        return;
-    }
-    
-    const originalText = downloadBtn.querySelector('span').textContent;
-    downloadBtn.querySelector('span').textContent = 'Descarregant...';
+    span.textContent = downloadingText;
     downloadBtn.disabled = true;
     
     try {
-        // Usar la URL que ya está en el DOM (el navegador la servirá desde su caché local)
-        const cachedUrl = img.src;
-        const response = await fetch(cachedUrl);
-        const blob = await response.blob();
+        // Usar la API REST de Google Drive con la API key (soporta CORS)
+        const apiUrl = `https://www.googleapis.com/drive/v3/files/${photo.id}?alt=media&key=${GALLERY_CONFIG.API_KEY}`;
+        const response = await fetch(apiUrl);
         
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+        
+        const blob = await response.blob();
         const blobUrl = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = blobUrl;
@@ -786,10 +785,10 @@ async function downloadCurrentPhoto() {
         window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
         console.error('Error descargando la imagen:', error);
-        // Fallback: abrir en nueva pestaña
-        window.open(img.src, '_blank');
+        // Fallback: descargar vía Google Drive export
+        window.open(`https://drive.google.com/uc?export=download&id=${photo.id}`, '_blank');
     } finally {
-        downloadBtn.querySelector('span').textContent = originalText;
+        span.textContent = downloadText;
         downloadBtn.disabled = false;
     }
 }
