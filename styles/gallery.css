@@ -7,7 +7,7 @@
     background-color: transparent;
     padding: 4rem 2rem;
     position: relative;
-    margin-bottom: 15vh;
+    margin-bottom: 0vh;
     overflow: visible;
 }
 
@@ -35,11 +35,9 @@
 
 .folder-card {
     width: -webkit-fill-available;
-    height: 30vh;
-    min-height: 200px;
-    background: linear-gradient(145deg, rgba(203, 178, 121, 0.15), rgba(109, 95, 65, 0.1));
-    border: 2px solid var(--primary-color);
-    border-radius: 16px;
+    height: 22vh;
+    min-height: 160px;
+    background: var(--primary-dark-blur-color);
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
@@ -49,6 +47,18 @@
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(10px);
+    mask-image:
+      radial-gradient(circle at top left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at top right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px));
+    -webkit-mask-image:
+      radial-gradient(circle at top left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at top right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px));
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
 }
 
 /* Hidden folders (for "show more" functionality) */
@@ -73,13 +83,15 @@
     right: 0;
     bottom: 0;
     background: linear-gradient(to bottom, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.95) 100%);
-    border-radius: 14px;
+    border: 1px solid rgba(203, 178, 121, 0.3);
+    border-radius: 0;
     pointer-events: none;
     z-index: 5;
 }
 
 .folder-card.fade-folder.show-all::after {
-    display: none;
+    background: none;
+    z-index: 1;
 }
 
 /* Show more button - positioned over the faded card */
@@ -121,7 +133,7 @@
 }
 
 .folder-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-0.5vh);
     box-shadow: 0 20px 40px rgba(203, 178, 121, 0.3);
     border-color: var(--primary-color-hover);
 }
@@ -133,7 +145,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(180deg, transparent 0%, rgba(203, 178, 121, 0.1) 100%);
+    background: var(--primary-dark-blur-color);
+    border-radius: 0;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -142,10 +155,27 @@
     opacity: 1;
 }
 
+.folder-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(203, 178, 121, 0.3);
+    pointer-events: none;
+    z-index: 1;
+    transition: border-color 0.3s ease;
+}
+
+.folder-card:hover::after {
+    border-color: var(--primary-color);
+}
+
 .folder-icon {
     width: 120px;
     height: 100px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2vh;
     position: relative;
     border-radius: 8px;
 }
@@ -191,7 +221,7 @@
 }
 
 .folder-count {
-    font-size: 1.5vh;
+    font-size: 2vh;
     color: rgba(203, 178, 121, 0.6);
     margin-top: 0.5vh;
     font-family: "Google Sans", sans-serif;
@@ -203,8 +233,27 @@
 }
 
 /* ===== ALBUM PANEL (Overlay) ===== */
+.album-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.album-backdrop.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
 .album-panel-overlay {
-    border: 0.25vh solid var(--primary-color);
     margin-top: 8vh;
     position: fixed;
     top: 0;
@@ -214,36 +263,130 @@
     justify-self: anchor-center;
     align-self: anchor-center;
     overflow: hidden;
-    background: black;
-    opacity: 0.8;
+    background: var(--primary-dark-blur-color);
     backdrop-filter: blur(10px);
     z-index: 1000;
     display: none;
     opacity: 0;
     transition: opacity 0.3s ease;
+    mask-image:
+      radial-gradient(circle at top left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at top right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px));
+    -webkit-mask-image:
+      radial-gradient(circle at top left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at top right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px));
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
 }
 
 .album-panel-overlay.active {
     display: flex;
+    flex-direction: column;
     opacity: 1;
 }
 
 .album-panel {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
+    flex: 1;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(109, 95, 65, 0.4) transparent;
+}
+
+.album-panel:hover {
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+/* Webkit custom scrollbar */
+.album-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.album-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.album-panel::-webkit-scrollbar-thumb {
+    background: rgba(109, 95, 65, 0.4);
+    border-radius: 3px;
+}
+
+.album-panel::-webkit-scrollbar-thumb:hover,
+.album-panel::-webkit-scrollbar-thumb:active {
+    background: var(--primary-color);
 }
 
 .album-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 2vh;
     padding-bottom: 1vh;
     border-bottom: 0.25vh solid var(--primary-color);
+    backdrop-filter: blur(10px) brightness(0.25);
+    padding: 1.5vh;
+    flex-shrink: 0;
+}
+
+.album-back-btn {
+    width: 4vh;
+    height: 4vh;
+    min-width: 4vh;
+    background: transparent;
+    border: 0.25vh solid var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: absolute;
+    left: 2vh;
+    z-index: 2;
+}
+
+.album-back-btn:hover {
+    background: var(--primary-color);
+}
+
+.album-back-btn svg {
+    width: 2.5vh;
+    height: 2.5vh;
+    stroke: var(--primary-color);
+    fill: none;
+    transition: stroke 0.3s ease;
+}
+
+.album-back-btn:hover svg {
+    stroke: #000;
+}
+
+.album-header-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.album-logo {
+    display: none;
+}
+
+.album-logo.has-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5vh;
+    min-height: 40px;
+    max-width: 60%;
+}
+
+.album-logo.has-logo img {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
 }
 
 .album-title {
@@ -254,35 +397,7 @@
     font-family: "Google Sans", sans-serif;
     font-optical-sizing: auto;
     text-transform: uppercase;
-}
-
-.album-close-btn {
-    width: 3vh;
-    height: 3vh;
-    margin-left: 2vh;
-    background: transparent;
-    border: 0.25vh solid var(--primary-color);
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.album-close-btn:hover {
-    background: var(--primary-color);
-}
-
-.album-close-btn svg {
-    width: 4vh;
-    height: 4vh;
-    stroke: var(--primary-color);
-    transition: stroke 0.3s ease;
-}
-
-.album-close-btn:hover svg {
-    stroke: #000;
+    text-align: center;
 }
 
 /* ===== PHOTO GRID ===== */
@@ -291,6 +406,7 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
     padding: 1rem;
+    margin-bottom: 1vh;
 }
 
 .photo-item {
@@ -305,7 +421,7 @@
 
 .photo-item:hover {
     border-color: var(--primary-color);
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
 
 .photo-item img {
@@ -316,7 +432,7 @@
 }
 
 .photo-item:hover img {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .photo-item-overlay {
@@ -346,26 +462,44 @@
 
 /* ===== PHOTO VIEWER (Lightbox) ===== */
 .photo-viewer-overlay {
+    margin-top: 8vh;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
+    width: 95vw;
+    height: 85vh;
+    justify-self: anchor-center;
+    align-self: anchor-center;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
     z-index: 2000;
     display: none;
     opacity: 0;
     transition: opacity 0.3s ease;
+    mask-image:
+      radial-gradient(circle at top left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at top right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px));
+    -webkit-mask-image:
+      radial-gradient(circle at top left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at top right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom left, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px)),
+      radial-gradient(circle at bottom right, transparent 0 var(--border-inverse), black calc(var(--border-inverse) + 1px));
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
 }
 
 .photo-viewer-overlay.active {
     display: flex;
+    flex-direction: column;
     opacity: 1;
 }
 
 .photo-viewer {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -373,9 +507,12 @@
 
 .photo-viewer-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: rgba(0, 0, 0, 0.5);
+    padding-bottom: 1vh;
+    border-bottom: 0.25vh solid var(--primary-color);
+    background: var(--primary-blur-color);
+    padding: 2.5vh;
+    flex-shrink: 0;
 }
 
 .photo-viewer-title {
@@ -392,12 +529,7 @@
     gap: 1rem;
 }
 
-/* Botón cerrar del visor - mismas medidas que album-close-btn */
-.viewer-btn.viewer-close-btn {
-    width: 3vh;
-    height: 3vh;
-    margin-left: 2vh;
-}
+/* Botón cerrar del visor - usa album-back-btn */
 
 .viewer-btn {
     width: 4vh;
@@ -444,7 +576,7 @@
 .download-btn {
     width: auto;
     height: auto;
-    padding: 1rem 2rem;
+    padding: 1vh 1.5vh;
     background: rgba(0, 0, 0, 0.8);
     border: 2px solid var(--primary-color);
     border-radius: 12px;
@@ -556,8 +688,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 60px;
-    height: 60px;
+    width: 5vh;
+    height: 5vh;
     background: rgba(203, 178, 121, 0.6);
     border: 0.25vh solid var(--primary-color);
     border-radius: 50%;
@@ -657,8 +789,11 @@
 
 /* Vertical/Square screens (aspect ratio <= 1) */
 @media (max-aspect-ratio: 1/1) {
+    .album-backdrop {
+        background: transparent;
+    }
+
     .album-panel-overlay {
-        border: none;
         margin-top: 0;
         position: fixed;
         top: 0;
@@ -673,6 +808,27 @@
         display: none;
         opacity: 0;
         transition: opacity 0.3s ease;
+        mask-image: none;
+        -webkit-mask-image: none;
+    }
+
+    .photo-viewer-overlay {
+        margin-top: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        justify-self: center;
+        align-self: center;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 2000;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        mask-image: none;
+        -webkit-mask-image: none;
     }
 
     .folders-carousel {
@@ -685,8 +841,8 @@
     .folder-card {
         width: 90vw;
         max-width: none;
-        height: 20vh;
-        min-height: 180px;
+        height: 16vh;
+        min-height: 140px;
     }
     
     .folder-icon {
@@ -695,7 +851,7 @@
     }
     
     .folder-count {
-        font-size: 1.4vh;
+        font-size: 2vh;
     }
     
     .show-more-container {
@@ -718,8 +874,8 @@
     }
     
     .folder-card {
-        height: 30vh;
-        min-height: 220px;
+        height: 22vh;
+        min-height: 180px;
     }
     
     /* En horizontal, no mostrar el efecto fade ni el botón */
@@ -734,16 +890,53 @@
     .show-more-container {
         display: none;
     }
+
+    /* Photo viewer header: mismo aspecto que album header en horizontal */
+    .photo-viewer-header {
+        position: relative;
+    }
+
+    .photo-viewer-title {
+        font-size: 2.5vh;
+        margin: 0;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .photo-viewer-actions {
+        display: none;
+    }
 }
 
 /* Pantallas verticales (aspect ratio <= 1) - Botones cerrar a la izquierda */
 @media (max-aspect-ratio: 1/1) {
     
-    /* Album header: cruz y título a la izquierda */
+    /* Album header: botón atrás a la izquierda, logo/título centrado */
     .album-header {
-        flex-direction: row-reverse;
-        justify-content: flex-end;
-        gap: 1.5vh;
+        padding-top: 1vh;
+        background-color: black;
+        height: 6vh;
+    }
+    
+    .album-back-btn {
+        left: 1.5vh;
+    }
+    
+    .album-title {
+        font-size: 3vh;
+    }
+    
+    .album-logo.has-logo {
+        height: 4vh;
+        min-height: 30px;
+    }
+    
+    /* Photo viewer header: mismo estilo que album header */
+    .photo-viewer-header {
+        flex-direction: row;
+        justify-content: flex-start;
+        border-bottom: 0.25vh solid var(--primary-color);
+        padding: 1.5vh;
         padding-top: 1vh;
         position: absolute;
         z-index: 10000;
@@ -752,42 +945,17 @@
         height: 6vh;
     }
     
-    .album-title {
-        font-size: 3vh;
-    }
-    
-    /* Photo viewer header: mismo estilo que album header */
-    .photo-viewer-header {
-        flex-direction: row;
-        justify-content: flex-start;
-        gap: 1.5vh;
-        border-bottom: 2px solid var(--primary-color);
-        margin-bottom: 2vh;
-        padding-bottom: 1vh;
-        padding-top: 1vh;
-        position: absolute;
-        z-index: 10000;
-        width: 100%;
-        height: 6vh;
-    }
-    
     .photo-viewer-title {
         font-size: 3vh;
         text-align: left;
         margin: 0;
+        margin-left: 5vh;
         font-weight: bold;
         text-transform: uppercase;
         max-width: 65vw;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-    
-    .viewer-btn.viewer-close-btn {
-        width: 3vh;
-        height: 3vh;
-        margin-left: 2vh;
-        flex-shrink: 0;
     }
     
     .photo-viewer-actions {
@@ -797,7 +965,6 @@
     .photo-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
-        margin-top: 8vh;
     }
     
     .photo-nav-btn {
@@ -815,6 +982,7 @@
     
     .gallery-section {
         padding: 2rem 1rem;
+        margin-bottom: 10vh;
     }
     
     .album-panel {

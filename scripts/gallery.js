@@ -325,18 +325,23 @@ function createFolderCard(folder, index, isVertical, totalFolders) {
 
 function createAlbumPanelHTML() {
     return `
-        <div class="album-panel-overlay" id="album-panel-overlay">
-            <div class="album-panel">
+        <div class="album-backdrop" id="album-backdrop">
+            <div class="album-panel-overlay" id="album-panel-overlay">
                 <div class="album-header">
-                    <h2 class="album-title" id="album-title"></h2>
-                    <button class="album-close-btn" id="album-close-btn" aria-label="Cerrar álbum">
+                    <button class="album-back-btn" id="album-close-btn" aria-label="Cerrar álbum">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M19 12H5M5 12l7 7M5 12l7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
+                    <div class="album-header-center">
+                        <div class="album-logo" id="album-logo"></div>
+                        <h2 class="album-title" id="album-title"></h2>
+                    </div>
                 </div>
-                <div class="photo-grid" id="photo-grid">
-                    <!-- Photos will be loaded here -->
+                <div class="album-panel">
+                    <div class="photo-grid" id="photo-grid">
+                        <!-- Photos will be loaded here -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -348,9 +353,9 @@ function createPhotoViewerHTML() {
         <div class="photo-viewer-overlay" id="photo-viewer-overlay">
             <div class="photo-viewer">
                 <div class="photo-viewer-header">
-                    <button class="viewer-btn viewer-close-btn" id="viewer-close-btn" aria-label="Cerrar visor">
+                    <button class="album-back-btn" id="viewer-close-btn" aria-label="Cerrar visor">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 6L6 18M6 6l12 12" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M19 12H5M5 12l7 7M5 12l7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
                     <h3 class="photo-viewer-title" id="viewer-title"></h3>
@@ -434,14 +439,15 @@ function attachFolderListeners() {
     // Album panel close
     const albumCloseBtn = document.getElementById('album-close-btn');
     const albumOverlay = document.getElementById('album-panel-overlay');
+    const albumBackdrop = document.getElementById('album-backdrop');
     
     if (albumCloseBtn) {
         albumCloseBtn.addEventListener('click', closeAlbum);
     }
     
-    if (albumOverlay) {
-        albumOverlay.addEventListener('click', (e) => {
-            if (e.target === albumOverlay) closeAlbum();
+    if (albumBackdrop) {
+        albumBackdrop.addEventListener('click', (e) => {
+            if (e.target === albumBackdrop) closeAlbum();
         });
     }
     
@@ -521,9 +527,23 @@ async function openAlbum(folderId, folderName) {
     
     const albumOverlay = document.getElementById('album-panel-overlay');
     const albumTitle = document.getElementById('album-title');
+    const albumLogo = document.getElementById('album-logo');
     const photoGrid = document.getElementById('photo-grid');
     
-    albumTitle.textContent = folderName;
+    // Find the folder data to get the logo
+    const folder = galleryState.folders.find(f => f.id === folderId);
+    const hasLogo = folder && folder.logo && folder.logo.thumbnail;
+    
+    if (hasLogo) {
+        albumLogo.innerHTML = `<img src="${folder.logo.thumbnail}" alt="${folderName}" />`;
+        albumLogo.classList.add('has-logo');
+        albumTitle.style.display = 'none';
+    } else {
+        albumLogo.innerHTML = '';
+        albumLogo.classList.remove('has-logo');
+        albumTitle.style.display = '';
+        albumTitle.textContent = folderName;
+    }
     photoGrid.innerHTML = `
         <div class="gallery-loading" style="grid-column: 1 / -1;">
             <div class="loading-spinner"></div>
@@ -532,6 +552,8 @@ async function openAlbum(folderId, folderName) {
     `;
     
     albumOverlay.classList.add('active');
+    const albumBackdrop = document.getElementById('album-backdrop');
+    if (albumBackdrop) albumBackdrop.classList.add('active');
     document.body.style.overflow = 'hidden';
     
     try {
@@ -547,6 +569,8 @@ async function openAlbum(folderId, folderName) {
 function closeAlbum() {
     const albumOverlay = document.getElementById('album-panel-overlay');
     albumOverlay.classList.remove('active');
+    const albumBackdrop = document.getElementById('album-backdrop');
+    if (albumBackdrop) albumBackdrop.classList.remove('active');
     document.body.style.overflow = '';
     galleryState.currentAlbum = null;
     galleryState.currentPhotos = [];
