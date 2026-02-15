@@ -757,20 +757,25 @@ async function downloadCurrentPhoto() {
     const photo = galleryState.currentPhotos[galleryState.currentPhotoIndex];
     const downloadBtn = document.getElementById('viewer-download-btn');
     
-    // Cambiar el texto del botón mientras descarga
+    // Buscar la imagen ya cargada en el carrusel del DOM
+    const slide = document.querySelector(`.carousel-slide[data-index="${galleryState.currentPhotoIndex}"]`);
+    const img = slide ? slide.querySelector('.carousel-image') : null;
+    
+    if (!img || !img.src || !img.classList.contains('loaded')) {
+        console.warn('La imagen aún no está cargada en el visor.');
+        return;
+    }
+    
     const originalText = downloadBtn.querySelector('span').textContent;
     downloadBtn.querySelector('span').textContent = 'Descarregant...';
     downloadBtn.disabled = true;
     
     try {
-        // Usar la URL del thumbnail con tamaño máximo para descargar
-        const imageUrl = `https://drive.google.com/thumbnail?id=${photo.id}&sz=w4000`;
-        
-        // Descargar la imagen como blob
-        const response = await fetch(imageUrl);
+        // Usar la URL que ya está en el DOM (el navegador la servirá desde su caché local)
+        const cachedUrl = img.src;
+        const response = await fetch(cachedUrl);
         const blob = await response.blob();
         
-        // Crear URL del blob y descargar
         const blobUrl = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = blobUrl;
@@ -778,15 +783,12 @@ async function downloadCurrentPhoto() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        
-        // Liberar el blob URL
         window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
         console.error('Error descargando la imagen:', error);
         // Fallback: abrir en nueva pestaña
-        window.open(`https://drive.google.com/uc?export=download&id=${photo.id}`, '_blank');
+        window.open(img.src, '_blank');
     } finally {
-        // Restaurar el botón
         downloadBtn.querySelector('span').textContent = originalText;
         downloadBtn.disabled = false;
     }
