@@ -2,7 +2,7 @@ import os
 import urllib.request
 import json
 
-API_KEY        = os.environ["GOOGLE_API_KEY"]
+API_KEY        = os.environ["GOOGLE_CREDENTIALS"]
 SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
 SHEET_NAME     = "galeria"
 
