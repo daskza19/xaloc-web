@@ -119,8 +119,9 @@ function handleResize() {
 
 function createFolderCard(folder, index, isVertical, totalFolders) {
     const hasLogo = !!folder.logo;
+    const safeLogo = hasLogo ? folder.logo.replace(/'/g, '%27') : '';
     const logoStyle = hasLogo
-        ? `background-image: url('${folder.logo}'); background-size: contain; background-position: center; background-repeat: no-repeat;`
+        ? `background-image: url('${safeLogo}'); background-size: contain; background-position: center; background-repeat: no-repeat;`
         : '';
 
     let extraClasses = '';
