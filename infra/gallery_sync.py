@@ -4,11 +4,9 @@ import shutil
 import urllib.request
 import urllib.parse
 
-API_KEY        = "AIzaSyCe-NEPXAU1tvpsCxu6Segh73LmKXcWTtY"
-SPREADSHEET_ID = "1Y4dWIL670gYEEaKEx2_Gi9dDw1F0_VsapHmDa2127bU"
-LOGOS_FOLDER_ID = "1lKdDBhpsOMhCwLqL0GA4jaaZGM8FptFi"
-# API_KEY        = os.environ["GOOGLE_CREDENTIALS"]
-# SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
+API_KEY        = os.environ["GOOGLE_CREDENTIALS"]
+SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
+LOGOS_FOLDER_ID = os.environ["LOGOS_ID"]
 SHEET_NAME     = "galeria"
 GALLERY_PATH = "images/gallery"
 LOGOS_PATH   = os.path.join(GALLERY_PATH, "logos")
@@ -19,7 +17,6 @@ ALLOWED_MIME_TYPES = [
     "image/webp",
     "image/gif"
 ]
-
 
 # ============ SETUP ============
 def setup_folders():

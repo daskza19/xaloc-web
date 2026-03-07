@@ -18,6 +18,7 @@ jobs:
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          LOGOS_ID: ${{ secrets.LOGOS_ID }}
         run: |
           cd $GITHUB_WORKSPACE
           python infra/gallery_sync.py
