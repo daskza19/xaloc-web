@@ -9,5 +9,67 @@
       "images/gallery/FESTA DELS 25/Colombia Bandera.png",
       "images/gallery/FESTA DELS 25/Mathew piscinero.png"
     ]
+  },
+  {
+    "order": "2",
+    "name": "CAP D'ANY 2025",
+    "logo": "images/gallery/logos/CAP D'ANY 2025.png",
+    "photoCount": 9,
+    "photos": [
+      "images/gallery/CAP D'ANY 2025/Captura de pantalla 2026-01-11 a las 16.23.30.png",
+      "images/gallery/CAP D'ANY 2025/Captura de pantalla 2026-01-11 a las 16.23.31 1.png",
+      "images/gallery/CAP D'ANY 2025/Captura de pantalla 2026-01-11 a las 16.23.33.png",
+      "images/gallery/CAP D'ANY 2025/Captura de pantalla 2026-01-11 a las 16.23.34.png",
+      "images/gallery/CAP D'ANY 2025/Captura de pantalla 2026-01-11 a las 16.23.36.png",
+      "images/gallery/CAP D'ANY 2025/Captura de pantalla 2026-01-11 a las 16.24.58.png",
+      "images/gallery/CAP D'ANY 2025/Captura de pantalla 2026-01-11 a las 16.29.11.png",
+      "images/gallery/CAP D'ANY 2025/Captura de pantalla 2026-01-11 a las 16.29.13.png",
+      "images/gallery/CAP D'ANY 2025/Captura de pantalla 2026-01-11 a las 16.29.19.png"
+    ]
+  },
+  {
+    "order": "3",
+    "name": "EL RECADU (20-12-2025)",
+    "logo": "images/gallery/logos/EL RECADU (20-12-2025).png",
+    "photoCount": 17,
+    "photos": [
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.53.48.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.53.51.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.53.55.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.53.57.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.00.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.18.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.21.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.24.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.26.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.27.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.31.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.32.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.34.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.35.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.37.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.38.png",
+      "images/gallery/EL RECADU (20-12-2025)/Captura de pantalla 2026-01-11 a las 15.54.39.png"
+    ]
+  },
+  {
+    "order": "4",
+    "name": "CAP D'ANY 2026",
+    "logo": "images/gallery/logos/CAP D'ANY 2026.png",
+    "photoCount": 2,
+    "photos": [
+      "images/gallery/CAP D'ANY 2026/Captura de pantalla 2026-01-11 a las 16.15.18.png",
+      "images/gallery/CAP D'ANY 2026/Captura de pantalla 2026-01-11 a las 16.15.32.png"
+    ]
+  },
+  {
+    "order": "5",
+    "name": "EL RECADU (07-03-2026)",
+    "logo": "images/gallery/logos/EL RECADU (07-03-2026).png",
+    "photoCount": 2,
+    "photos": [
+      "images/gallery/EL RECADU (07-03-2026)/0f30dd90-0596-11f1-a104-c5356659c263.jpg.webp",
+      "images/gallery/EL RECADU (07-03-2026)/descarga.jpeg"
+    ]
   }
 ]
