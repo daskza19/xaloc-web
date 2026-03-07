@@ -46,6 +46,7 @@ def fetch_galeria():
 def drive_list_files(folder_id):
     mime_query = " or ".join([f"mimeType='{m}'" for m in ALLOWED_MIME_TYPES])
     query = f"'{folder_id}' in parents and ({mime_query}) and trashed=false"
+    # folder_id nunca tiene apóstrofe, pero por seguridad:
     url = (
         f"https://www.googleapis.com/drive/v3/files"
         f"?q={urllib.parse.quote(query)}"
@@ -67,7 +68,8 @@ def drive_download_file(file_id, dest_path):
 
 def find_logo_in_folder(folder_id, logo_name):
     """Busca <folder_name>.png dentro de una carpeta de Drive."""
-    query = f"'{folder_id}' in parents and name='{logo_name}.png' and trashed=false"
+    safe_name = logo_name.replace("'", "\\'")
+    query = f"'{folder_id}' in parents and name='{safe_name}.png' and trashed=false"
     url = (
         f"https://www.googleapis.com/drive/v3/files"
         f"?q={urllib.parse.quote(query)}"
