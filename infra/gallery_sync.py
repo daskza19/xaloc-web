@@ -138,6 +138,46 @@ def main():
 
         print()
 
+    # Al final del main(), después del bucle:
+    generate_manifest(rows)
+
 
 if __name__ == "__main__":
     main()
+
+
+# ============ MANIFEST ============
+def generate_manifest(rows):
+    manifest = []
+    for row in rows:
+        folder_name = row.get("FOLDER NAME", "").strip()
+        order       = row.get("ORDER", "").strip()
+        if not folder_name:
+            continue
+
+        event_path = os.path.join(GALLERY_PATH, folder_name)
+        logo_path  = os.path.join(LOGOS_PATH, f"{folder_name}.png")
+
+        # Listar fotos de la carpeta local
+        photos = []
+        if os.path.exists(event_path):
+            for f in sorted(os.listdir(event_path)):
+                if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif')):
+                    photos.append(f"images/gallery/{folder_name}/{f}")
+
+        manifest.append({
+            "order":       order,
+            "name":        folder_name,
+            "logo":        f"images/gallery/logos/{folder_name}.png" if os.path.exists(logo_path) else None,
+            "photoCount":  len(photos),
+            "photos":      photos
+        })
+
+    # Ordenar por ORDER
+    manifest.sort(key=lambda x: int(x["order"]) if x["order"].isdigit() else 9999)
+
+    manifest_path = "images/gallery/manifest.json"
+    with open(manifest_path, "w", encoding="utf-8") as f:
+        json.dump(manifest, f, ensure_ascii=False, indent=2)
+
+    print(f"\n✅ Manifest generado: {manifest_path} ({len(manifest)} eventos)")
