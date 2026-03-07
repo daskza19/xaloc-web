@@ -27,6 +27,6 @@ jobs:
           cd $GITHUB_WORKSPACE
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add images/gallery
+          git add .
           git diff --cached --quiet || git commit -m "chore: update gallery from Google Drive"
           git push origin main

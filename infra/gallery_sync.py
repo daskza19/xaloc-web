@@ -10,7 +10,7 @@ LOGOS_FOLDER_ID = "1lKdDBhpsOMhCwLqL0GA4jaaZGM8FptFi"
 # API_KEY        = os.environ["GOOGLE_CREDENTIALS"]
 # SPREADSHEET_ID = os.environ["SPREADSHEET_ID"]
 SHEET_NAME     = "galeria"
-GALLERY_PATH = "../images/gallery"
+GALLERY_PATH = "images/gallery"
 LOGOS_PATH   = os.path.join(GALLERY_PATH, "logos")
 
 ALLOWED_MIME_TYPES = [
